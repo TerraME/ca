@@ -19,6 +19,12 @@ local function to8Bits(num)
     return rule
 end
 
+--- Implements Wolfram's one-dimensional Cellular Automata.
+-- For more information, see http://mathworld.wolfram.com/ElementaryCellularAutomaton.html.
+-- @arg data.finalTime A number with the final time of the simulation. It also indicates
+-- the size of space needed to show all the simulation steps.
+-- @arg data.rule A number between 0 and 255 with the rule to be used by the
+-- automaton.
 Wolfram = Model{
     finalTime = 55,
     rule = 90,
@@ -51,7 +57,7 @@ Wolfram = Model{
 			target = model.cs,
 			select = "state",
 			value = {"dead", "alive"},
-			color = {"black", "white"}
+			color = {"white", "black"}
 		}
 
 	    local changes = function(ev)
@@ -62,6 +68,7 @@ Wolfram = Model{
                 local centerx = i
                 local rightx  = ((i + 1) == model.cs.xdim) and 0 or (i + 1)
                 local yc      = ev:getTime() - 1
+
                 -- values in the three cells above the current one
                 local topl = model.cs:get(leftx,   yc).state
                 local topc = model.cs:get(centerx, yc).state

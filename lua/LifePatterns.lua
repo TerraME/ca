@@ -1,10 +1,10 @@
---[[
-	Patterns in Life Game
 
-]]
--- for more pattern, look at the "oscillators" and the "spaceships"
--- in http://www.conwaylife.com/wiki/Main_Page
-
+--- Insert a given pattern in a CellularSpace.
+-- @arg cs1 A CellularSpace to receive the pattern.
+-- @arg cs2 A CellularSpace with the pattern.
+-- @arg x0 The x position where the pattern will be copied on the CellularSpace.
+-- @arg y0 The y position where the pattern will be copied on the CellularSpace.
+-- @usage insertPattern(cs, glider(), 0, 0)
 function insertPattern(cs1, cs2, x0, y0)
 	for i = 0, (cs2.ydim - 1) do
 		for j = 0, (cs2.xdim - 1) do
@@ -13,6 +13,8 @@ function insertPattern(cs1, cs2, x0, y0)
 	end
 end
 
+--- Return a CellularSpace with Brian OSC pattern.
+-- @usage brianOsc()
 function brianOsc()
 	local cs = CellularSpace{
 		xdim = 4
@@ -33,6 +35,8 @@ function brianOsc()
 	return cs
 end
 
+--- Return a CellularSpace with glider pattern.
+-- @usage glider()
 function glider()
 	local cs = CellularSpace{
 		xdim = 3
@@ -50,23 +54,8 @@ function glider()
 	return cs
 end
 
---[[
-Pulsar oscillator in Life
-
-..OOO...OOO
-
-O....O.O....O
-O....O.O....O
-O....O.O....O
-..OOO...OOO
-
-..OOO...OOO
-O....O.O....O
-O....O.O....O
-O....O.O....O
-
-..OOO...OOO
-]]
+--- Return a CellularSpace with pulsar pattern.
+-- @usage pulsar()
 function pulsar()
 	local cs = CellularSpace{
 		xdim = 13
@@ -140,16 +129,8 @@ function pulsar()
 	return cs
 end
 
---[[ Figure-eight oscillator in Life
-
-OO
-OO.O
-....O
-.O
-..O.OO
-....OO
-]]
-
+--- Return a CellularSpace with figure-eight pattern.
+-- @usage figureEight()
 function figureEight()
 	local cs = CellularSpace{
 		xdim = 6
@@ -179,18 +160,9 @@ function figureEight()
 
 	return cs
 end
---[[
-...OO
-..O..O
-.O....O
-O......O
-O......O
-.O....O
-..O..O
-...OO
 
-]]
-
+--- Return a CellularSpace with octagon pattern.
+-- @usage octagon()
 function octagon()
 	local cs = CellularSpace{
 		xdim = 8
@@ -227,12 +199,8 @@ function octagon()
 	return cs
 end
 
---[[
-..O....O
-OO.OOOO.OO
-..O....O
-]]
-
+--- Return a CellularSpace with penta decathlon pattern.
+-- @usage pentaDecathlon()
 function pentaDecathlon()
 	local cs = CellularSpace{
 		xdim = 10,
@@ -260,12 +228,8 @@ function pentaDecathlon()
 	return cs
 end
 
---[[
-.OO
-OO
-.O
-]]
-
+--- Return a CellularSpace with rpentomino pattern.
+-- @usage rpentomino()
 function rpentomino()
 	local cs = CellularSpace{
 		xdim = 3
@@ -283,23 +247,8 @@ function rpentomino()
 	return cs
 end
 
---[[
- 0123456789012
- .0...........
-1.000.......00
-2....0......0.
-3...00....0.0.
-4.........00..
-5.............
-6.....000.....
-7.....000.....
-8..00.........
-9.0.0....00...
- .0......0....
-100.......000.
-2...........0.
-]]
-
+--- Return a CellularSpace with dinnerTable pattern.
+-- @usage dinnerTable()
 function dinnerTable()
 	local cs = CellularSpace{
 		xdim = 13
@@ -347,15 +296,8 @@ function dinnerTable()
 	return cs
 end
 
---[[
- 0123456
- ...oo..
-1.o....0
-2o......
-3o.....0
-4oooooo.
-]]
-
+--- Return a CellularSpace with heavy spaceship pattern.
+-- @usage heavySpaceship()
 function heavySpaceship()
 	local cs = CellularSpace{
 		xdim = 7
@@ -382,6 +324,8 @@ function heavySpaceship()
 	return cs
 end
 
+--- Return a CellularSpace with rabbits pattern.
+-- @usage rabbits()
 function rabbits()
 	local cs = CellularSpace{
 		xdim = 7

@@ -1,5 +1,20 @@
 
 --- Template for Cellular Automata Model.
+-- @arg data.dim A number with the x and y sizes of space.
+-- @arg data.map A table with some parameters to visualize
+-- the CellularSpace.
+-- @tabular map
+-- Map  & Description \
+-- "select" & A string with the name of the attribute to be visualized. \
+-- "value" &  A table with the possible values of the cellular automata. \
+-- "color" & A table with the colors for the respective values.
+-- @arg data.init A function that describes how a Cell will be initialized.
+-- @arg data.changes A function that describes how each Cell is updated.
+-- @usage model = CellularAutomataModel{
+--     -- ...
+-- }
+--
+-- model:execute()
 function CellularAutomataModel(data)
 	mandatoryTableArgument(data, "map", "table")
 	mandatoryTableArgument(data, "changes", "function")

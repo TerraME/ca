@@ -9,6 +9,18 @@ local function countNeighbors(cell, val)
 	return count
 end
 
+--- A Model to simulate Game of Life.
+-- Look at the "oscillators" and the "spaceships"
+-- in http://www.conwaylife.com/wiki/Main_Page for the 
+-- description some patterns.
+-- @arg data.finalTime A number with the final time of the simulation.
+-- @arg data.dim A number with the x and y size of space.
+-- @arg data.pattern A set of available patterns to be used as
+-- initial state for the cellular automata.
+-- The available patterns are "random", "rabbits", "heavySpaceship",
+-- "dinnerTable", "rpentomino", "pentaDecathlon", "octagon",
+-- "figureEight", "pulsar", "glider", "brianOsc". The default is
+-- random, with half alive cells randomly distributed in space.
 Life = CellularAutomataModel{
 	finalTime = 100,
 	dim = 30,
