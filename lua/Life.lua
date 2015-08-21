@@ -38,18 +38,32 @@ Life = CellularAutomataModel{
 		"brianOsc",
 	},
 	space = function(model)
+		local cell
+
 		if model.pattern ~= "random" then
-			local cell = Cell{
+			cell = Cell{
 				init = function(cell)
 					cell.state = "dead"
 				end
 			}
-
-			local cs = CellularSpace{
-				xdim = model.dim,
-				instance = cell
+		else
+			cell = Cell{
+				init = function(cell)
+					if Random():number() > 0.5 then
+						cell.state = "alive"
+					else
+						cell.state = "dead"
+					end
+				end
 			}
+		end
 
+		local cs = CellularSpace{
+			xdim = model.dim,
+			instance = cell
+		}
+
+		if model.pattern ~= "random" then
 			local pattern = _G[model.pattern]()
 
 			if cs.xdim < pattern.xdim then
@@ -59,26 +73,11 @@ Life = CellularAutomataModel{
 			end
 
 			insertPattern(cs, pattern, 0, 0)
-
-			return cs
-		else
-			local cell = Cell{
-				init = function(cell)
-					if Random():number() > 0.5 then
-						cell.state = "alive"
-					else
-						cell.state = "dead"
-					end
-				end
-			}
-
-			local cs = CellularSpace{
-				xdim = model.dim,
-				instance = cell
-			}
-
-			return cs
 		end
+
+		cs:createNeighborhood{wrap = true}
+
+		return cs
 	end,
 	changes = function(cell)
 		local alive = countNeighbors(cell, "alive")

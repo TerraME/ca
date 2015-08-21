@@ -54,8 +54,6 @@ function CellularAutomataModel(data)
 			}
 		end
 
-		instance.cs:createNeighborhood{wrap = true}
-
 		instance.timer = Timer{
             Event{priority = "high", action = function (ev)
 				instance.cs:synchronize()
@@ -63,6 +61,7 @@ function CellularAutomataModel(data)
             end},    
 			Event{start = 0, priority = "low", action = function()
 				instance.cs:notify()
+				instance:notify()
 			end}
 		}
 
