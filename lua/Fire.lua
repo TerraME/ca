@@ -9,19 +9,6 @@ local function countNeighbors(cell, val)
 	return count
 end
 
-
-if false then
-	FOREST = "forest"
-	EMPTY = "empty"
-	BURNING = "burning"
-	BURNED = "burned"
-else
-	FOREST = 1
-	EMPTY = 2
-	BURNING = 3
-	BURNED = 4
-end
-
 --- A Model to simulate fire in the forest.
 -- @arg data.finalTime A number with the final time of the simulation.
 -- @arg data.dim A number with the x and y size of space.
@@ -33,9 +20,9 @@ Fire = CellularAutomataModel{
 		local cell = Cell{
 			init = function(cell)
 				if Random():number() > model.empty then
-					cell.state = FOREST
+					cell.state = "forest"
 				else
-					cell.state = EMPTY
+					cell.state = "empty"
 				end
 			end
 		}
@@ -45,12 +32,12 @@ Fire = CellularAutomataModel{
 			instance = cell
 		}
 
-		cs:sample().state = BURNING
+		cs:sample().state = "burning"
 		cs:createNeighborhood{strategy = "vonneumann"}
 
 		cs.burned = function()
 			return #Trajectory{target = cs, select = function(cell)
-				return cell.state == BURNED
+				return cell.state == "burned"
 			end}
 		end
 
@@ -62,18 +49,18 @@ Fire = CellularAutomataModel{
 		return cs
 	end,
 	changes = function(cell)
-		if cell.past.state == BURNING then
-			cell.state = BURNED
-		elseif cell.past.state == FOREST then
-			local burning = countNeighbors(cell, BURNING)
+		if cell.past.state == "burning" then
+			cell.state = "burned"
+		elseif cell.past.state == "forest" then
+			local burning = countNeighbors(cell, "burning")
 			if burning > 0 then
-				cell.state = BURNING
+				cell.state = "burning"
 			end
 		end
 	end,
 	map = {
 		select = "state",
-		value = {FOREST, BURNING, BURNED, EMPTY},
+		value = {"forest", "burning", "burned", "empty"},
 		color = {"green", "red", "brown", "white"}
 	}
 }

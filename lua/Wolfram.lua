@@ -28,7 +28,6 @@ end
 Wolfram = Model{
     finalTime = 55,
     rule = 90,
-
     init = function(model)
 		integerTableArgument(model, "rule")
 		verify(model.rule >= 0, "Rule should be greater than or equal to zero.")
@@ -41,8 +40,8 @@ Wolfram = Model{
 		}
 
 	    model.cs = CellularSpace {
-        	xdim = model.finalTime * 2 + 3,
-        	ydim = model.finalTime + 3,
+        	xdim = model.finalTime * 2 + 1,
+        	ydim = model.finalTime + 1,
         	instance = model.cell
        }
 
