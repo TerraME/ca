@@ -21,6 +21,7 @@ function CellularAutomataModel(data)
 	mandatoryTableArgument(data, "dim", "number")
 	optionalTableArgument(data, "init", "function")
 	optionalTableArgument(data, "space", "function")
+	optionalTableArgument(data, "neighborhood", "string")
 
 	local init = data.init
 	data.init = nil
@@ -52,12 +53,14 @@ function CellularAutomataModel(data)
 				xdim = instance.dim,
 				instance = instance.cell
 			}
+
+			instance.cs:createNeighborhood{strategy = data.neighborhood}
 		end
 
 		instance.timer = Timer{
             Event{priority = "high", action = function (ev)
 				instance.cs:synchronize()
-				instance.cs:changes()
+				instance.cs:changes(ev)
             end},    
 			Event{start = 0, priority = "low", action = function()
 				instance.cs:notify()
@@ -69,7 +72,10 @@ function CellularAutomataModel(data)
 			target = instance.cs,
 			select = map.select,
 			value = map.value,
-			color = map.color
+			color = map.color,
+			min = map.min,
+			max = map.max,
+			slices = map.slices
 		}
 	end
 

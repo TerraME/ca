@@ -41,7 +41,7 @@ Fire = CellularAutomataModel{
 			end}
 		end
 
-		Chart{
+		model.chart = Chart{
 			target = cs,
 			select = "burned"
 		}
