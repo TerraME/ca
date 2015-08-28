@@ -27,10 +27,10 @@ function brianOsc()
 	cs:get(1, 2).state = "alive"
 	cs:get(2, 1).state = "alive"
 	cs:get(2, 2).state = "alive"
-	cs:get(1, 0).state = DYING
-	cs:get(0, 2).state = DYING
-	cs:get(2, 3).state = DYING
-	cs:get(3, 1).state = DYING
+	cs:get(1, 0).state = "alive"
+	cs:get(0, 2).state = "alive"
+	cs:get(2, 3).state = "alive"
+	cs:get(3, 1).state = "alive"
 
 	return cs
 end

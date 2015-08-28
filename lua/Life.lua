@@ -61,7 +61,7 @@ Life = CellularAutomataModel{
 				customError("CellularSpace should have dim at least "..pattern.ydim..".")
 			end
 
-			insertPattern(cs, pattern, 0, 0)
+			insertPattern(cs, pattern, 10, 10)
 		end
 
 		cs:createNeighborhood{wrap = true}

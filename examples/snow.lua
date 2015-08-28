@@ -4,7 +4,7 @@
 import("ca")
 
 DIM = 50
-FINAL = 300
+FINAL = 600
 PROB = 0.02
 
 Snow = CellularAutomataModel{
