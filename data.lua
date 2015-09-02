@@ -1,13 +1,13 @@
 
 data{
-	file = {"pentaDecathlon.life"},
+	file = "pentaDecathlon.life",
 	summary = "Pentadecathlon (or PD) is a period 15 oscillator that was found in 1970 by John Conway while tracking the history of short rows of cells (see one cell thick pattern).",
 	source = "http://www.conwaylife.com/wiki/Pentadecathlon"
 }
 
 data{
 	file = "rPentomino.life",
-	summary = "The R-pentomino is a methuselah that was found by John Conway in 1970.[1] It is by far the most active polyomino with fewer than six cells; all of the others stabilize in at most 10 generations, but the R-pentomino does not do so until generation 1103, by which time it has a population of 116. ",
+	summary = "The R-pentomino is a methuselah that was found by John Conway in 1970. It is by far the most active polyomino with fewer than six cells; all of the others stabilize in at most 10 generations, but the R-pentomino does not do so until generation 1103, by which time it has a population of 116. ",
 	source = "http://www.conwaylife.com/wiki/R-pentomino"
 }
 
@@ -51,5 +51,30 @@ data{
 	file = "pulsar.life",
 	summary = "Pulsar is, despite its size, the fourth most common oscillator (and by far the most common of period greater than 2).",
 	source = "http://www.conwaylife.com/wiki/Pulsar"
+}
+
+data{
+	file = "bookend.life",
+	summary = "Bookend (or hook) is generation 1 of century and an induction coil.",
+	source = "http://www.conwaylife.com/wiki/Bookend"
+}
+
+data{
+	file = "blocker.life",
+	summary = "Blocker is a period 8 oscillator found by Robert Wainwright.",
+	source = "http://www.conwaylife.com/wiki/Blocker"
+}
+
+
+data{
+	file = "boatTie.life",
+	summary = "Boat-tie (or bi-boat) is a small still life whose name is a pun on 'bow tie'. It is the twentieth most common still life, being less common than Integral sign but more common than snake.",
+	source = "http://www.conwaylife.com/wiki/Boat-tie"
+}
+
+data{
+	file = "25P3H1.life",
+	summary = "25P3H1V0.2 is an unnamed c/3 orthogonal spaceship discovered by Dean Hickerson in August 1989 and was the first c/3 spaceship to be discovered. In terms of its 25 cells, it is tied with 25P3H1V0.1 as the smallest c/3 spaceship, although unlike 25P3H1V0.1, it has a population of 25 in all of its phases, as well as a smaller bounding box.",
+	source = "http://www.conwaylife.com/wiki/25P3H1V0.2"
 }
 

@@ -17,10 +17,9 @@ patterns.default = "random"
 -- @arg data.dim A number with the x and y size of space.
 -- @arg data.pattern A set of available patterns to be used as
 -- initial state for the cellular automata.
--- The available patterns are "random", "rabbits", "heavySpaceship",
--- "dinnerTable", "rpentomino", "pentaDecathlon", "octagon",
--- "figureEight", "pulsar", "glider", "brianOsc". The default is
--- random, with half alive cells randomly distributed in space.
+-- The available patterns are described in the data available in the package.
+-- They should be used without ".life" extension. The default pattern is
+-- "random", with half alive cells randomly distributed in space.
 Life = CellularAutomataModel{
 	finalTime = 100,
 	dim = 30,
