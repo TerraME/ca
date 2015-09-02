@@ -41,9 +41,15 @@ Fire = CellularAutomataModel{
 			end}
 		end
 
+		cs.forest = function()
+			return #Trajectory{target = cs, select = function(cell)
+				return cell.state == "forest"
+			end}
+		end
+
 		model.chart = Chart{
 			target = cs,
-			select = "burned"
+			select = {"burned", "forest"}
 		}
 
 		return cs
