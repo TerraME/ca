@@ -1,3 +1,14 @@
+local patterns = {}
+
+forEachFile(packageInfo("ca").data, function(file)
+	if string.sub(file, -5) == ".life" then
+		table.insert(patterns, string.sub(file, 1, -6))
+	end
+end)
+
+table.insert(patterns, "random")
+patterns.default = "random"
+
 --- A Model to simulate Game of Life.
 -- Look at the "oscillators" and the "spaceships"
 -- in http://www.conwaylife.com/wiki/Main_Page for the 
@@ -13,19 +24,7 @@
 Life = CellularAutomataModel{
 	finalTime = 100,
 	dim = 30,
-	pattern = Choice{
-		"random",
-		"rabbits",
-		"heavySpaceship",
-		"dinnerTable",
-		"rpentomino",
-		"pentaDecathlon",
-		"octagon",
-		"figureEight",
-		"pulsar",
-		"glider",
-		"brianOsc",
-	},
+	pattern = Choice(patterns),
 	space = function(model)
 		local cell
 
@@ -53,7 +52,7 @@ Life = CellularAutomataModel{
 		}
 
 		if model.pattern ~= "random" then
-			local pattern = _G[model.pattern]()
+			local pattern = getLife(model.pattern)
 
 			if cs.xdim < pattern.xdim then
 				customError("CellularSpace should have dim at least "..pattern.xdim..".")

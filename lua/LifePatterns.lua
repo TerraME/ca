@@ -13,337 +13,48 @@ function insertPattern(cs1, cs2, x0, y0)
 	end
 end
 
---- Return a CellularSpace with Brian OSC pattern.
--- @usage brianOsc()
-function brianOsc()
+--- Return a CellularSpace from a data file available in the ca package.
+-- It works with .life files, where the CellularSpace is stored as spaces
+-- (dead) or Xs (alive).
+-- @arg pattern A string with a file name without .file.
+-- @usage getLife("glider")
+function getLife(pattern)
+	local mfile = file(pattern..".life", "ca")
+
+	lines = {}
+	for line in io.lines(mfile) do 
+		lines[#lines + 1] = line
+	end
+
+	local xdim = string.len(lines[1])
+	local ydim = #lines
+
+	if ydim == xdim then ydim = nil end
+
 	local cs = CellularSpace{
-		xdim = 4
-	}
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
-	end)
-
-	cs:get(1, 1).state = "alive"
-	cs:get(1, 2).state = "alive"
-	cs:get(2, 1).state = "alive"
-	cs:get(2, 2).state = "alive"
-	cs:get(1, 0).state = "alive"
-	cs:get(0, 2).state = "alive"
-	cs:get(2, 3).state = "alive"
-	cs:get(3, 1).state = "alive"
-
-	return cs
-end
-
---- Return a CellularSpace with glider pattern.
--- @usage glider()
-function glider()
-	local cs = CellularSpace{
-		xdim = 3
-	}
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
-	end)
-
-	cs:get(1, 0).state = "alive"
-	cs:get(2, 1).state = "alive"
-	cs:get(0, 2).state = "alive"
-	cs:get(1, 2).state = "alive"
-	cs:get(2, 2).state = "alive"
-
-	return cs
-end
-
---- Return a CellularSpace with pulsar pattern.
--- @usage pulsar()
-function pulsar()
-	local cs = CellularSpace{
-		xdim = 13
-	}
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
-	end)
-
-	cs:get( 2, 0).state = "alive"
-	cs:get( 3, 0).state = "alive"
-	cs:get( 4, 0).state = "alive"
-
-	cs:get( 8, 0).state = "alive"
-	cs:get( 9, 0).state = "alive"
-	cs:get(10, 0).state = "alive"
-
-	cs:get( 0, 2).state = "alive"
-	cs:get( 5, 2).state = "alive"
-	cs:get( 7, 2).state = "alive"
-	cs:get(12, 2).state = "alive"
-
-	cs:get( 0, 3).state = "alive"
-	cs:get( 5, 3).state = "alive"
-	cs:get( 7, 3).state = "alive"
-	cs:get(12, 3).state = "alive"
-
-	cs:get( 0, 4).state = "alive"
-	cs:get( 5, 4).state = "alive"
-	cs:get( 7, 4).state = "alive"
-	cs:get(12, 4).state = "alive"
-
-	cs:get( 2, 5).state = "alive"
-	cs:get( 3, 5).state = "alive"
-	cs:get( 4, 5).state = "alive"
-
-	cs:get( 8, 5).state = "alive"
-	cs:get( 9, 5).state = "alive"
-	cs:get(10, 5).state = "alive"
-
-	cs:get( 2, 7).state = "alive"
-	cs:get( 3, 7).state = "alive"
-	cs:get( 4, 7).state = "alive"
-
-	cs:get( 8, 7).state = "alive"
-	cs:get( 9, 7).state = "alive"
-	cs:get(10, 7).state = "alive"
-
-	cs:get( 0, 8).state = "alive"
-	cs:get( 5, 8).state = "alive"
-	cs:get( 7, 8).state = "alive"
-	cs:get(12, 8).state = "alive"
-
-	cs:get( 0, 9).state = "alive"
-	cs:get( 5, 9).state = "alive"
-	cs:get( 7, 9).state = "alive"
-	cs:get(12, 9).state = "alive"
-
-	cs:get( 0, 10).state = "alive"
-	cs:get( 5, 10).state = "alive"
-	cs:get( 7, 10).state = "alive"
-	cs:get(12, 10).state = "alive"
-
-	cs:get( 2, 12).state = "alive"
-	cs:get( 3, 12).state = "alive"
-	cs:get( 4, 12).state = "alive"
-
-	cs:get( 8, 12).state = "alive"
-	cs:get( 9, 12).state = "alive"
-	cs:get(10, 12).state = "alive"
-
-	return cs
-end
-
---- Return a CellularSpace with figure-eight pattern.
--- @usage figureEight()
-function figureEight()
-	local cs = CellularSpace{
-		xdim = 6
+		xdim = xdim,
+		ydim = ydim
 	}
 
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
+	local ydim = #lines
+
+	forEachElement(lines, function(y, line)
+		if xdim ~= string.len(line) then
+			customError("Line "..y.." of file "..mfile.." does not have the same length ("
+				..string.len(line)..") of the first line ("..xdim..").")
+		end
+
+		for x = 1, xdim do
+			if string.sub(line, x, x) == "X" then
+				cs:get(x - 1, y - 1).state = "alive"
+			elseif string.sub(line, x, x) == " " then
+				cs:get(x - 1, y - 1).state = "dead"
+			else
+				customError("Invalid character '"..string.sub(line, x, x)
+					.."' in file "..mfile.." (line "..y..").")
+			end
+		end
 	end)
-
-	cs:get(0, 0).state = "alive"
-	cs:get(1, 0).state = "alive"
-
-	cs:get(0, 1).state = "alive"
-	cs:get(1, 1).state = "alive"
-	cs:get(3, 1).state = "alive"
-
-	cs:get(4, 2).state = "alive"
-
-	cs:get(1, 3).state = "alive"
-
-	cs:get(2, 4).state = "alive"
-	cs:get(4, 4).state = "alive"
-	cs:get(5, 4).state = "alive"
-
-	cs:get(4, 5).state = "alive"
-	cs:get(5, 5).state = "alive"
-
-	return cs
-end
-
---- Return a CellularSpace with octagon pattern.
--- @usage octagon()
-function octagon()
-	local cs = CellularSpace{
-		xdim = 8
-	}
-
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
-	end)
-
-	cs:get(3, 0).state = "alive"
-	cs:get(4, 0).state = "alive"
-
-	cs:get(2, 1).state = "alive"
-	cs:get(5, 1).state = "alive"
-
-	cs:get(1, 2).state = "alive"
-	cs:get(6, 2).state = "alive"
-
-	cs:get(0, 3).state = "alive"
-	cs:get(7, 3).state = "alive"
-
-	cs:get(0, 4).state = "alive"
-	cs:get(7, 4).state = "alive"
-
-	cs:get(1, 5).state = "alive"
-	cs:get(6, 5).state = "alive"
-
-	cs:get(2, 6).state = "alive"
-	cs:get(5, 6).state = "alive"
-	
-	cs:get(3, 7).state = "alive"
-	cs:get(4, 7).state = "alive"
-
-	return cs
-end
-
---- Return a CellularSpace with penta decathlon pattern.
--- @usage pentaDecathlon()
-function pentaDecathlon()
-	local cs = CellularSpace{
-		xdim = 10,
-		ydim = 3
-	}
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
-	end)
-
-	cs:get(2, 0).state = "alive"
-	cs:get(7, 0).state = "alive"
-
-	cs:get(0, 1).state = "alive"
-	cs:get(1, 1).state = "alive"
-	cs:get(3, 1).state = "alive"
-	cs:get(4, 1).state = "alive"
-	cs:get(5, 1).state = "alive"
-	cs:get(6, 1).state = "alive"
-	cs:get(8, 1).state = "alive"
-	cs:get(9, 1).state = "alive"
-
-	cs:get(2, 2).state = "alive"
-	cs:get(7, 2).state = "alive"
-
-	return cs
-end
-
---- Return a CellularSpace with rpentomino pattern.
--- @usage rpentomino()
-function rpentomino()
-	local cs = CellularSpace{
-		xdim = 3
-	}
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
-	end)
-
-	cs:get(1, 0).state = "alive"
-	cs:get(2, 0).state = "alive"
-	cs:get(0, 1).state = "alive"
-	cs:get(1, 1).state = "alive"
-	cs:get(1, 2).state = "alive"
-
-	return cs
-end
-
---- Return a CellularSpace with dinnerTable pattern.
--- @usage dinnerTable()
-function dinnerTable()
-	local cs = CellularSpace{
-		xdim = 13
-	}
-
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
-	end)
-
-	cs:get( 1, 0).state = "alive"
-	cs:get( 1, 1).state = "alive"
-	cs:get( 2, 1).state = "alive"
-	cs:get( 3, 1).state = "alive"
-	cs:get(11, 1).state = "alive"
-	cs:get(12, 1).state = "alive"
-	cs:get( 4, 2).state = "alive"
-	cs:get(11, 2).state = "alive"
-	cs:get( 3, 3).state = "alive"
-	cs:get( 4, 3).state = "alive"
-	cs:get( 9, 3).state = "alive"
-	cs:get(11, 3).state = "alive"
-	cs:get( 9, 4).state = "alive"
-	cs:get(10, 4).state = "alive"
-	cs:get( 5, 6).state = "alive"
-	cs:get( 6, 6).state = "alive"
-	cs:get( 7, 6).state = "alive"
-	cs:get( 5, 7).state = "alive"
-	cs:get( 6, 7).state = "alive"
-	cs:get( 7, 7).state = "alive"
-	cs:get( 2, 8).state = "alive"
-	cs:get( 3, 8).state = "alive"
-	cs:get( 1, 9).state = "alive"
-	cs:get( 3, 9).state = "alive"
-	cs:get( 8, 9).state = "alive"
-	cs:get( 9, 9).state = "alive"
-	cs:get( 1, 10).state = "alive"
-	cs:get( 8, 10).state = "alive"
-	cs:get( 0, 11).state = "alive"
-	cs:get( 1, 11).state = "alive"
-	cs:get( 9, 11).state = "alive"
-	cs:get(10, 11).state = "alive"
-	cs:get(11, 11).state = "alive"
-	cs:get(11, 12).state = "alive"
-
-	return cs
-end
-
---- Return a CellularSpace with heavy spaceship pattern.
--- @usage heavySpaceship()
-function heavySpaceship()
-	local cs = CellularSpace{
-		xdim = 7
-	}
-
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
-	end)
-
-	cs:get(3, 0).state = "alive"
-	cs:get(4, 0).state = "alive"
-	cs:get(1, 1).state = "alive"
-	cs:get(6, 1).state = "alive"
-	cs:get(0, 2).state = "alive"
-	cs:get(0, 3).state = "alive"
-	cs:get(6, 3).state = "alive"
-	cs:get(0, 4).state = "alive"
-	cs:get(1, 4).state = "alive"
-	cs:get(2, 4).state = "alive"
-	cs:get(3, 4).state = "alive"
-	cs:get(4, 4).state = "alive"
-	cs:get(5, 4).state = "alive"
-
-	return cs
-end
-
---- Return a CellularSpace with rabbits pattern.
--- @usage rabbits()
-function rabbits()
-	local cs = CellularSpace{
-		xdim = 7
-	}
-
-	forEachCell(cs, function(cell)
-		cell.state = "dead"
-	end)
-
-	cs:get(0, 0).state = "alive"
-	cs:get(0, 4).state = "alive"
-	cs:get(0, 5).state = "alive"
-	cs:get(0, 6).state = "alive"
-	cs:get(1, 0).state = "alive"
-	cs:get(1, 1).state = "alive"
-	cs:get(1, 2).state = "alive"
-	cs:get(1, 5).state = "alive"
-	cs:get(2, 1).state = "alive"
 
 	return cs
 end
