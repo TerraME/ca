@@ -1,5 +1,5 @@
 
--- Excitable model from Wiener & Rosenbleuth (1946).
+-- @example Excitable model from Wiener & Rosenbleuth (1946).
 -- Arch. Inst. Cardiol. Mexico 16, 202-265.
 -- Reffered in Ermentrout & Edelstein-Keshet (1993).
 -- Cellular Automata Approaches to Biological Modeling.

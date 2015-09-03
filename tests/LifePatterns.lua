@@ -2,149 +2,39 @@
 -- Author: Pedro R. Andrade
 
 return{
-	brianOsc = function(unitTest)
-		local cs = brianOsc()
+	getLife = function(unitTest)
+		local function savePattern(pattern)
+			local cs = getLife(pattern)
 
-		unitTest:assertType(cs, "CellularSpace")
+			unitTest:assertType(cs, "CellularSpace")
 
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
+			local m = Map{
+				target = cs,
+				select = "state",
+				value = {"dead", "alive"},
+				color = {"black", "white"}
+			}
 
-		unitTest:assertSnapshot(m, "brianosc.bmp")
-	end,
-	dinnerTable = function(unitTest)
-		local cs = dinnerTable()
+			unitTest:assertSnapshot(m, pattern..".bmp")
+		end
 
-		unitTest:assertType(cs, "CellularSpace")
-
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
-
-		unitTest:assertSnapshot(m, "dinnertable.bmp")
-	end,
-	figureEight = function(unitTest)
-		local cs = figureEight()
-
-		unitTest:assertType(cs, "CellularSpace")
-
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
-
-		unitTest:assertSnapshot(m, "figureeight.bmp")
-	end,
-	glider = function(unitTest)
-		local cs = glider()
-
-		unitTest:assertType(cs, "CellularSpace")
-
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
-
-		unitTest:assertSnapshot(m, "glider.bmp")
-	end,
-	heavySpaceship = function(unitTest)
-		local cs = heavySpaceship()
-
-		unitTest:assertType(cs, "CellularSpace")
-
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
-
-		unitTest:assertSnapshot(m, "heavyspaceship.bmp")
+		savePattern("25P3H1")
+		savePattern("blocker")
+		savePattern("boatTie")
+		savePattern("bookend")
+		savePattern("dinnerTable")
+		savePattern("figureEight")
+		savePattern("glider")
+		savePattern("heavySpaceship")
+		savePattern("octagon")
+		savePattern("pentaDecathlon")
+		savePattern("pulsar")
+		savePattern("rPentomino")
+		savePattern("rabbits")
 	end,
 	insertPattern = function(unitTest)
-		unitTest:assert(true)
-		--unitTest:assertSnapshot(m, "brianosc.bmp")
-	end,
-	octagon = function(unitTest)
-		local cs = octagon()
-
-		unitTest:assertType(cs, "CellularSpace")
-
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
-
-		unitTest:assertSnapshot(m, "octagon.bmp")
-	end,
-	pentaDecathlon = function(unitTest)
-		local cs = pentaDecathlon()
-
-		unitTest:assertType(cs, "CellularSpace")
-
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
-
-		unitTest:assertSnapshot(m, "pentadecathlon.bmp")
-	end,
-	pulsar = function(unitTest)
-		local cs = pulsar()
-
-		unitTest:assertType(cs, "CellularSpace")
-
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
-
-		unitTest:assertSnapshot(m, "pulsar.bmp")
-	end,
-	rabbits = function(unitTest)
-		local cs = rabbits()
-
-		unitTest:assertType(cs, "CellularSpace")
-
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
-
-		unitTest:assertSnapshot(m, "rabbits.bmp")
-	end,
-	rpentomino = function(unitTest)
-		local cs = rpentomino()
-
-		unitTest:assertType(cs, "CellularSpace")
-
-		local m = Map{
-			target = cs,
-			select = "state",
-			value = {"dead", "alive"},
-			color = {"black", "white"}
-		}
-
-		unitTest:assertSnapshot(m, "rpentomino.bmp")
+		local l = Life{pattern = "glider"}
+		unitTest:assertSnapshot(l.map, "insertPattern.bmp")
 	end
 }
 

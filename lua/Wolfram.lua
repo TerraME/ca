@@ -1,7 +1,7 @@
 
 local function to8Bits(num)
     -- returns a table of bits, most significant first.
-    bits = 8
+    local bits = 8
     local t = {} -- will contain the bits        
     for b = bits, 1, -1 do
         t[b] = math.fmod(num, 2)

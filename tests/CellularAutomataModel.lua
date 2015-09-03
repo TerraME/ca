@@ -3,7 +3,13 @@
 
 return{
 	CellularAutomataModel = function(unitTest)
-		-- add a test here 
-	end,
+		local w = Wolfram{
+			finalTime = 30
+		}
+
+		w:execute()
+
+		unitTest:assertSnapshot(w.map, "ca-test.bmp")
+	end
 }
 

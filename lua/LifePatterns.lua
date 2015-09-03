@@ -21,7 +21,7 @@ end
 function getLife(pattern)
 	local mfile = file(pattern..".life", "ca")
 
-	lines = {}
+	local lines = {}
 	for line in io.lines(mfile) do 
 		lines[#lines + 1] = line
 	end

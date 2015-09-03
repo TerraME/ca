@@ -1,14 +1,15 @@
--- Test file for CellularAutomataModel.lua
+-- Test file for Fire.lua
 -- Author: Pedro R. Andrade
 
 return{
 	Fire = function(unitTest)
-		print(type(Fire))
---		local f = Fire{}
+		local f = Fire{
+			finalTime = 5
+		}
 
+		f:execute()
 
---		f:execute()
---
+		unitTest:assertSnapshot(f.map, "fire.bmp")
 	end,
 }
 
