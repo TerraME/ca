@@ -12,6 +12,7 @@ end
 --- A Model to simulate fire in the forest.
 -- @arg data.finalTime A number with the final time of the simulation.
 -- @arg data.dim A number with the x and y size of space.
+-- @image fire.bmp
 Fire = CellularAutomataModel{
 	finalTime = 100,
 	empty = Choice{min = 0, max = 1, default = 0.1},

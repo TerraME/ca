@@ -20,6 +20,7 @@ patterns.default = "random"
 -- The available patterns are described in the data available in the package.
 -- They should be used without ".life" extension. The default pattern is
 -- "random", with half alive cells randomly distributed in space.
+-- @image life.bmp
 Life = CellularAutomataModel{
 	finalTime = 100,
 	dim = 30,

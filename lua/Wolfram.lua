@@ -25,6 +25,7 @@ end
 -- the size of space needed to show all the simulation steps.
 -- @arg data.rule A number between 0 and 255 with the rule to be used by the
 -- automaton.
+-- @image wolfram.bmp
 Wolfram = Model{
     finalTime = 55,
     rule = 90,
