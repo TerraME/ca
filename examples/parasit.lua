@@ -2,6 +2,7 @@
 -- @example Parasit model from Hassell et al. (1991).
 -- Spatial structure and chaos in insect population
 -- dynamics. Nature, Lond. 353, 255-258.
+-- @image parasit.bmp
 
 import("ca")
 

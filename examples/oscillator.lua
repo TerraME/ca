@@ -2,6 +2,7 @@
 -- @example Oscillator model from Ermentrout & Edelstein-Keshet (1993).
 -- Cellular Automata Approaches to Biological Modeling.
 -- Jornal of Theoretical Biology, 160, 97-133.
+-- @image oscillator.bmp
 
 import("ca")
 

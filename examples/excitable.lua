@@ -4,6 +4,7 @@
 -- Reffered in Ermentrout & Edelstein-Keshet (1993).
 -- Cellular Automata Approaches to Biological Modeling.
 -- Jornal of Theoretical Biology, 160, 97-133.
+-- @image excitable.bmp
 
 import("ca")
 

@@ -1,6 +1,7 @@
 
 -- @example Parity model, by Nigel Gilbert. See 
 -- modelingcommons.org/browse/one_model/3381.
+-- @image parity.bmp
 
 import("ca")
 

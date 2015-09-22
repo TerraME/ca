@@ -1,5 +1,6 @@
 
 -- @example Snow falling from the sky.
+-- @image snow.bmp
 
 import("ca")
 

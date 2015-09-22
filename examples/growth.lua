@@ -1,5 +1,6 @@
 
 -- @example Simple growth model.
+-- @image growth.bmp
 
 import("ca")
 
