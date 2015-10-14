@@ -4,7 +4,10 @@
 -- @arg cs2 A CellularSpace with the pattern.
 -- @arg x0 The x position where the pattern will be copied on the CellularSpace.
 -- @arg y0 The y position where the pattern will be copied on the CellularSpace.
--- @usage insertPattern(cs, glider(), 0, 0)
+-- @usage import("ca")
+--
+-- cs = CellularSpace{xdim = 10}
+-- insertPattern(cs, getLife("glider"), 0, 0)
 function insertPattern(cs1, cs2, x0, y0)
 	for i = 0, (cs2.ydim - 1) do
 		for j = 0, (cs2.xdim - 1) do
@@ -17,7 +20,9 @@ end
 -- It works with .life files, where the CellularSpace is stored as spaces
 -- (dead) or Xs (alive).
 -- @arg pattern A string with a file name without .file.
--- @usage getLife("glider")
+-- @usage import("ca")
+-- 
+-- glider = getLife("glider")
 function getLife(pattern)
 	local mfile = file(pattern..".life", "ca")
 

@@ -10,11 +10,41 @@
 -- "color" & A table with the colors for the respective values.
 -- @arg data.init A function that describes how a Cell will be initialized.
 -- @arg data.changes A function that describes how each Cell is updated.
--- @usage model = CellularAutomataModel{
---     -- ...
+-- @usage import("ca")
+--
+-- Anneal = CellularAutomataModel{
+--     finalTime = 30,
+--     dim = 80,
+--     init = function(cell)
+--         if Random():number() > 0.5 then
+--             cell.state = "L"
+--         else
+--             cell.state = "R"
+--         end
+--     end,
+--     changes = function(cell)
+--         local alive = countNeighbors(cell, "L")
+--
+--         if cell.state == "L" then alive = alive + 1 end
+--
+--         if alive <= 3 then
+--             cell.state = "R"
+--         elseif alive >= 6 then
+--             cell.state = "L"
+--         elseif alive == 4 then
+--             cell.state = "L"
+--         elseif alive == 5 then
+--             cell.state = "R"
+--         end
+--     end,
+--     map = {
+--         select = "state",
+--         value = {"L", "R"},
+--         color = {"black", "white"}
+--     }
 -- }
 --
--- model:execute()
+-- Anneal:execute()
 function CellularAutomataModel(data)
 	mandatoryTableArgument(data, "map", "table")
 	mandatoryTableArgument(data, "changes", "function")

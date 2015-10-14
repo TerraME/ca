@@ -1,6 +1,8 @@
 --- Anneal model from Toffoli & Margolis (1988).
 -- Cellular Automata Machines: A New Environment for Modeling.
 -- Cambridge, MA. MIT Press.
+-- @arg data.dim The x and y dimensions of space.
+-- @arg data.finalTime A number with the final time of the simulation.
 -- @image anneal.bmp
 Anneal = CellularAutomataModel{
 	finalTime = 100,

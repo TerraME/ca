@@ -1,17 +1,9 @@
 
-local function countNeighbors(cell, val)
-	local count = 0
-	forEachNeighbor(cell, function(cell, neigh)
-		if neigh.past.state == val then
-			count = count + 1
-		end
-	end)
-	return count
-end
-
 --- A Model to simulate fire in the forest.
 -- @arg data.finalTime A number with the final time of the simulation.
 -- @arg data.dim A number with the x and y size of space.
+-- @arg data.empty The percentage of empty cells in the beginning of the
+-- simulation. It must be a value between 0 and 1, with default 0.1.
 -- @image fire.bmp
 Fire = CellularAutomataModel{
 	finalTime = 100,
