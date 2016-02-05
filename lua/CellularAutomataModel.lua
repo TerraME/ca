@@ -10,6 +10,8 @@
 -- "color" & A table with the colors for the respective values.
 -- @arg data.init A function that describes how a Cell will be initialized.
 -- @arg data.changes A function that describes how each Cell is updated.
+-- @arg data.space An optional function to create space. It gets the
+-- model as argument and must return a CellularSpace.
 -- @usage import("ca")
 --
 -- Anneal = CellularAutomataModel{

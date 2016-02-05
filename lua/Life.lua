@@ -21,69 +21,70 @@ patterns.default = "random"
 -- They should be used without ".life" extension. The default pattern is
 -- "random", with half alive cells randomly distributed in space.
 -- @image life.bmp
-Life = CellularAutomataModel{
+Life = Model{
 	finalTime = 100,
 	dim = 30,
 	pattern = Choice(patterns),
-	space = function(model)
-		local cell
+	init = function(model)
+		model.cell = Cell{
+			init = function(cell)
+				cell.state = "dead"
+			end,
+			execute = function(cell)
+				local alive = countNeighbors(cell, "alive")
 
-		if model.pattern ~= "random" then
-			cell = Cell{
-				init = function(cell)
+				if alive < 2 then
+					cell.state = "dead"
+				elseif alive > 3 then
+					cell.state = "dead"
+				elseif alive == 3 and cell.past.state == "dead" then
+					cell.state = "alive"
+				end
+			end
+		}
+
+		if model.pattern == "random" then
+			model.cell.init = function(cell)
+				if Random():number() > 0.5 then
+					cell.state = "alive"
+				else
 					cell.state = "dead"
 				end
-			}
-		else
-			cell = Cell{
-				init = function(cell)
-					if Random():number() > 0.5 then
-						cell.state = "alive"
-					else
-						cell.state = "dead"
-					end
-				end
-			}
+			end
 		end
 
-		local cs = CellularSpace{
+		model.cs = CellularSpace{
 			xdim = model.dim,
-			instance = cell
+			instance = model.cell
 		}
 
 		if model.pattern ~= "random" then
 			local pattern = getLife(model.pattern)
 
-			if cs.xdim < pattern.xdim then
+			if model.cs.xdim < pattern.xdim then
 				customError("CellularSpace should have dim at least "..pattern.xdim..".")
-			elseif cs.ydim < pattern.ydim then
+			elseif model.cs.ydim < pattern.ydim then
 				customError("CellularSpace should have dim at least "..pattern.ydim..".")
 			end
 
-			local xloc = math.floor(cs.xdim/2 - pattern.xdim/2)
-			local yloc = math.floor(cs.ydim/2 - pattern.ydim/2)
+			local xloc = math.floor(model.cs.xdim/2 - pattern.xdim/2)
+			local yloc = math.floor(model.cs.ydim/2 - pattern.ydim/2)
 
-			insertPattern(cs, pattern, xloc, yloc)
+			insertPattern(model.cs, pattern, xloc, yloc)
 		end
 
-		cs:createNeighborhood{wrap = true}
+		model.cs:createNeighborhood{wrap = true}
 
-		return cs
-	end,
-	changes = function(cell)
-		local alive = countNeighbors(cell, "alive")
-		if alive < 2 then
-			cell.state = "dead"
-		elseif alive > 3 then
-			cell.state = "dead"
-		elseif alive == 3 and cell.past.state == "dead" then
-			cell.state = "alive"
-		end
-	end,
-	map = {
-		select = "state",
-		value = {"dead", "alive"},
-		color = {"black", "white"}
-	}
+		model.map = Map{
+			target = model.cs,
+			select = "state",
+			value = {"dead", "alive"},
+			color = {"black", "white"}
+		}
+
+		model.timer = Timer{
+			Event{action = model.cs}
+		}
+	end
 }
 
