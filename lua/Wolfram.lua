@@ -94,10 +94,8 @@ Wolfram = Model{
     	end
 
 		model.timer = Timer{
-			Event{action = function(ev)
-				changes(ev)
-				model.cs:notify()
-			end}
+			Event{action = changes},
+			Event{action = model.map}
 		}
 	end
 }

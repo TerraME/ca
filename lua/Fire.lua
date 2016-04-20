@@ -61,7 +61,9 @@ Fire = Model{
 		}
 
 		model.timer = Timer{
-			Event{action = model.cs}
+			Event{action = model.cs},
+			Event{action = model.chart},
+			Event{action = model.map}
 		}
 	end
 }

@@ -199,7 +199,10 @@ DaisyWorld = Model{
 		}
 
 		model.timer = Timer{
-			Event{action = model.cs}
+			Event{action = model.cs},
+			Event{action = model.chart},
+			Event{action = model.map1},
+			Event{action = model.map2}
 		}
 	end
 }
