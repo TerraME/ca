@@ -8,7 +8,7 @@ return{
 			finalTime = 5
 		}
 
-		l:execute()
+		l:run()
 
 		unitTest:assertSnapshot(l.map, "life.bmp")
 	end

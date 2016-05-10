@@ -3,11 +3,13 @@
 
 return{
 	Parasit = function(unitTest)
-		local model = Parasit{}
+		local model = Parasit{
+			finalTime = 5
+		}
 
 		unitTest:assertSnapshot(model.map, "Parasit-map-1-begin.bmp")
 
-		model:execute()
+		model:run()
 
 		unitTest:assertSnapshot(model.map, "Parasit-map-1-end.bmp")
 	end,

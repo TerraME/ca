@@ -35,7 +35,7 @@ Snow = Model{
 
 		model.cs:createNeighborhood{strategy = "vonneumann"}
 
-		map = Map{
+		model.map = Map{
 			target = model.cs,
 			select = "state",
 			value = {"snow", "empty"},
@@ -43,7 +43,8 @@ Snow = Model{
 		}
 
 		model.timer = Timer{
-			Event{action = model.cs}
+			Event{action = model.cs},
+			Event{action = model.map}
 		}
 	end
 }

@@ -3,10 +3,12 @@
 
 return{
 	Snow = function(unitTest)
-		local model = Snow{}
+		local model = Snow{
+			finalTime = 5
+		}
 
-		model:execute()
-
+		model:run()
+		unitTest:assertSnapshot(model.map, "snow.png")
 	end,
 }
 

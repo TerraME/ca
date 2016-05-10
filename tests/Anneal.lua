@@ -7,7 +7,7 @@ return{
 			finalTime = 5
 		}
 
-		a:execute()
+		a:run()
 
 		unitTest:assertSnapshot(a.map, "anneal.bmp")
 	end

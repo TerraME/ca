@@ -7,7 +7,7 @@ return{
 			finalTime = 5
 		}
 
-		f:execute()
+		f:run()
 
 		unitTest:assertSnapshot(f.map, "fire.bmp")
 	end,

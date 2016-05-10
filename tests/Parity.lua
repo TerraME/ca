@@ -3,11 +3,13 @@
 
 return{
 	Parity = function(unitTest)
-		local model = Parity{}
+		local model = Parity{
+			finalTime = 5
+		}
 
 		unitTest:assertSnapshot(model.map, "Parity-map-1-begin.bmp")
 
-		model:execute()
+		model:run()
 
 		unitTest:assertSnapshot(model.map, "Parity-map-1-end.bmp")
 	end,

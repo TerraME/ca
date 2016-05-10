@@ -41,10 +41,6 @@ Excitable = Model{
 
 		model.cs:createNeighborhood{strategy = "vonneumann"}
 
-		model.timer = Timer{
-			Event{action = model.cs}
-		}
-
 		model.map = Map{
 			target = model.cs,
 			select = "state",
@@ -52,6 +48,11 @@ Excitable = Model{
 			max = 5,
 			slices = 6,
 			color = "Blues"
+		}
+
+		model.timer = Timer{
+			Event{action = model.cs},
+			Event{action = model.map}
 		}
 	end
 }

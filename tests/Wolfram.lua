@@ -7,7 +7,7 @@ return{
 			finalTime = 15
 		}
 
-		w:execute()
+		w:run()
 
 		unitTest:assertSnapshot(w.map, "wolfram.bmp")
 	end

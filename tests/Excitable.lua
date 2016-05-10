@@ -3,11 +3,13 @@
 
 return{
 	Excitable = function(unitTest)
-		local model = Excitable{}
+		local model = Excitable{
+			finalTime = 5
+		}
 
 		unitTest:assertSnapshot(model.map, "Excitable-map-1-begin.bmp")
 
-		model:execute()
+		model:run()
 
 		unitTest:assertSnapshot(model.map, "Excitable-map-1-end.bmp")
 	end,

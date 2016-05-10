@@ -24,7 +24,7 @@ end
 -- 
 -- glider = getLife("glider")
 function getLife(pattern)
-	local mfile = file(pattern..".life", "ca")
+	local mfile = filePath(pattern..".life", "ca")
 
 	local lines = {}
 	for line in io.lines(mfile) do 

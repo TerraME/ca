@@ -119,7 +119,7 @@ DaisyWorld = Model{
 		reproducePerfect = Choice{min = 0, max = 100, default = 50},
 		reproduceMax = Choice{max = 100}
 	},
-	finalTime = Choice{min = 100, default = 200},
+	finalTime = Choice{min = 5, default = 200},
 	albedo = {
 		white = Choice{min = 0, max = 1, default = 0.2},
 		black = Choice{min = 0, max = 1, default = 0.7}  -- 0-1 How much energy hey absorb as heat from sunlight

@@ -45,7 +45,8 @@ Parasit = Model{
 		}
 
 		model.timer = Timer{
-			Event{action = model.cs}
+			Event{action = model.cs},
+			Event{action = model.map}
 		}
 	end
 }

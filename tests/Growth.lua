@@ -3,11 +3,13 @@
 
 return{
 	Growth = function(unitTest)
-		local model = Growth{}
+		local model = Growth{
+			finalTime = 5
+		}
 
 		unitTest:assertSnapshot(model.map, "Growth-map-1-begin.bmp")
 
-		model:execute()
+		model:run()
 
 		unitTest:assertSnapshot(model.map, "Growth-map-1-end.bmp")
 	end,

@@ -1,6 +1,5 @@
 
 files = {
-	"CellularAutomataModel.lua",
 	"Utils.lua",
 	"Anneal.lua",
 	"DaisyWorld.lua",
