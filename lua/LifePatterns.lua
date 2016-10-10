@@ -27,9 +27,12 @@ function getLife(pattern)
 	local mfile = filePath(pattern..".life", "ca")
 
 	local lines = {}
-	for line in io.lines(mfile) do 
-		lines[#lines + 1] = line
-	end
+	local line = mfile:read()
+
+	repeat
+		table.insert(lines, line)
+		line = mfile:read()
+	until not line
 
 	local xdim = string.len(lines[1])
 	local ydim = #lines

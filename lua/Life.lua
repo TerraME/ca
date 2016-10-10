@@ -1,9 +1,10 @@
 local patterns = {}
 
-forEachFile(packageInfo("ca").data, function(file)
-	if string.sub(file, -5) == ".life" then
-		table.insert(patterns, string.sub(file, 1, -6))
-	end
+local files = filesByExtension("ca", "life")
+
+forEachElement(files, function(_, file)
+    local _, name = file:split()
+	table.insert(patterns, name)
 end)
 
 table.insert(patterns, "random")
