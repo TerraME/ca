@@ -21,7 +21,7 @@ Excitable = Model{
 			end,	
 			execute = function(cell)
 				if cell.past.state == 0 then
-					forEachNeighbor(cell, function(cell, neigh)
+					forEachNeighbor(cell, function(_, neigh)
 						if neigh.past.state > 0 then
 							cell.state = 1
 						end

@@ -27,12 +27,12 @@ function getLife(pattern)
 	local mfile = filePath(pattern..".life", "ca")
 
 	local lines = {}
-	local line = mfile:read()
+	local mline = mfile:read()
 
 	repeat
-		table.insert(lines, line)
-		line = mfile:read()
-	until not line
+		table.insert(lines, mline)
+		mline = mfile:read()
+	until not mline
 
 	local xdim = string.len(lines[1])
 	local ydim = #lines
@@ -43,8 +43,6 @@ function getLife(pattern)
 		xdim = xdim,
 		ydim = ydim
 	}
-
-	local ydim = #lines
 
 	forEachElement(lines, function(y, line)
 		if xdim ~= string.len(line) then

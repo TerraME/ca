@@ -23,7 +23,7 @@ end
 
 -- It calculates the soil heat based on the neigbours, the mean between neighbours mean and itself
 local calculateSoilHeat = function(cell)
-	local selfHeat = 0
+	local selfHeat
 
 	if cell.past.daisy == "white" then  --increment or decrement temperature depending on the daisy
 		selfHeat = cell.past.SoilHeat - cell.past.SoilHeat * cell.albedo.white
@@ -36,12 +36,12 @@ local calculateSoilHeat = function(cell)
 	local neigbourHeat = 0 -- change temperature to make it similar to the neigbours
 	local neighbourCount = 0
 
-	forEachNeighbor(cell, function(cell, neigh) 
+	forEachNeighbor(cell, function(_, neigh)
 		neighbourCount = neighbourCount + 1
 		neigbourHeat = neigbourHeat + neigh.past.SoilHeat
 	end)
 
-	local neigbourHeat = neigbourHeat / neighbourCount -- calculate the mean of the neighbours
+	neigbourHeat = neigbourHeat / neighbourCount -- calculate the mean of the neighbours
 	local heat = (selfHeat + neigbourHeat) / 2
 	
 	heat = math.min(heat, cell.temperature.max) --make heat value inside the valid range

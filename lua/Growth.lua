@@ -19,7 +19,7 @@ Growth = Model{
 					cell.state = "empty"
 				end
 			end,	
-			execute = function(cell, ev)
+			execute = function(cell)
 				local count = countNeighbors(cell, "alive")
 
 				if cell.past.state == "empty" and count > 0 and Random():number() < model.probability then
