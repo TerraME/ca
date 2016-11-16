@@ -6,6 +6,7 @@
 -- Erasmus Mundus program, Munster University, 2014. It still needs further development.
 -- @arg data.finalTime The final simulation time.
 -- @arg data.dim The x and y dimensions of space.
+-- @image solid.bmp
 SolidDiffusion = Model{
 	dim = 31,
 	finalTime = 400,

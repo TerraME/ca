@@ -17,6 +17,7 @@
 -- @arg data.lifeSpan How long does a daisy live?
 -- @arg data.dim The x and y dimensions of space.
 -- @arg data.albedo A table with white and black albedos.
+-- @image daisy.bmp
 DaisyWorld = Model{
 	dim = 50,
 	finalTime = 200,
