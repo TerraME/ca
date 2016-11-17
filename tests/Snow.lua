@@ -4,7 +4,9 @@
 return{
 	Snow = function(unitTest)
 		local model = Snow{
-			finalTime = 5
+			finalTime = 15,
+			dim = 10,
+			probability = 0.5
 		}
 
 		model:run()

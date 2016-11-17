@@ -11,6 +11,14 @@ return{
 		l:run()
 
 		unitTest:assertSnapshot(l.map, "life.bmp")
+
+		l = Life{
+			finalTime = 5
+		}
+
+		l:run()
+
+		unitTest:assertSnapshot(l.map, "life-2.bmp")
 	end
 }
 

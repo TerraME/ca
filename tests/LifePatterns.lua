@@ -3,6 +3,18 @@
 
 return{
 	getLife = function(unitTest)
+		local function missingOne()
+			getLife("test/missing-one")
+		end
+		unitTest:assertError(missingOne, "Line 2 of file 'test/missing-one' does not have the same length (2) of the first line (3).")
+
+		local function wrongChar()
+			getLife("test/wrong-char")
+		end
+		unitTest:assertError(wrongChar, "Invalid character 'Z' in file 'test/wrong-char' (line 2).")
+
+
+
 		local function savePattern(pattern)
 			local cs = getLife(pattern)
 

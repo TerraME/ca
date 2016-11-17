@@ -1,94 +1,3 @@
-----------------------------------
--- 2D Daisyworld
--- Environmental Modelling
--- Nourhan, Shahin and Aida.
-----------------------------------
-
--- It calculates the probability to reproduce based on the temperature of the soil
-local function calculateProbRepro(cell)
-	local diff = math.abs(cell.temperature.reproducePerfect - cell.past.SoilHeat)
-	return 100 - diff
-end
-
--- A daisy dies because of old age
-local killDaisy = function(cell)
-	if cell.past.daisy == "black" then -- one daisy dies, one empty space increment
-		cell.lifeSpan = 0
-		cell.daisy = "empty"
-	elseif cell.past.daisy == "white" then
-		cell.lifeSpan = 0
-		cell.daisy = "empty"
-	end
-end
-
--- It calculates the soil heat based on the neigbours, the mean between neighbours mean and itself
-local calculateSoilHeat = function(cell)
-	local selfHeat
-
-	if cell.past.daisy == "white" then  --increment or decrement temperature depending on the daisy
-		selfHeat = cell.past.SoilHeat - cell.past.SoilHeat * cell.albedo.white
-	elseif cell.past.daisy == "black"  then 
-		selfHeat = cell.past.SoilHeat + cell.past.SoilHeat * cell.albedo.black
-	else
-		selfHeat = cell.past.SoilHeat
-	end
-
-	local neigbourHeat = 0 -- change temperature to make it similar to the neigbours
-	local neighbourCount = 0
-
-	forEachNeighbor(cell, function(_, neigh)
-		neighbourCount = neighbourCount + 1
-		neigbourHeat = neigbourHeat + neigh.past.SoilHeat
-	end)
-
-	neigbourHeat = neigbourHeat / neighbourCount -- calculate the mean of the neighbours
-	local heat = (selfHeat + neigbourHeat) / 2
-	
-	heat = math.min(heat, cell.temperature.max) --make heat value inside the valid range
-	heat = math.max(heat, cell.temperature.min)
-
-	return heat
-end
-
--- New daisy is born same color as the neigbour, and with age 0
-local function bornNewDaisy(cell)
-	local blackDaisyCounter = countNeighbors(cell, "black")
-	local whiteDaisyCounter = countNeighbors(cell, "white")
-
-	cell.lifeSpan = 0
-
-	if whiteDaisyCounter > blackDaisyCounter then
-		cell.daisy = "white"
-	elseif whiteDaisyCounter < blackDaisyCounter then
-		cell.daisy = "black"
-	elseif whiteDaisyCounter > 0 then  -- equal
-		if Random():number(0, 1) < 0.5 then
-			cell.daisy = "white"
-		else
-			cell.daisy = "black"
-		end 
-	end
-end
-
-local update = function(cell)
-	if cell.past.daisy ~= "empty" then
-		cell.lifeSpan = cell.lifeSpan + 1 --incrementing one day in the life of the daisy if it is not empty
-	end
-
-	if cell.past.lifeSpan >= cell.maxLifeSpan then  
-		cell:killDaisy()
-	end
-
-	cell.SoilHeat = cell:calculateSoilHeat()
-
-	if cell.past.daisy == "empty" and cell.past.SoilHeat > cell.temperature.reproduceMin and cell.past.SoilHeat < cell.temperature.reproduceMax then
-		local probabilityReproduce = cell:calculateProbRepro()
-		if Random():number() * 100 < probabilityReproduce then --new daisy is born
-			cell:bornNewDaisy()
-		end
-	end
-end
-
 --- Implementation of a 2D Daisy World model.
 -- We have three type of cells: White daisies, Black daisies and soil, with a given albedo for each of them.
 -- The cells are placed randomly in the cellular space depending on the given percentage of soil and white daisies, in the remaining there are placed black daisies. Each of them is given with a random initial age, to control the population of daisies, because when they are old (given age) they die.
@@ -99,7 +8,8 @@ end
 -- The daisies will die on a certain (given) age.
 -- The first version of this implementation was developed by Nourhan, Shahin and Aida, as final work for Environmental Modeling course in
 -- Erasmus Mundus program, Munster University, 2014. It still needs further development.
--- @arg data.proportions A table with two indexes, empty and white, describing the initial proportions of empty and white cells.
+-- @arg data.proportion A table with two indexes, empty and white, describing the initial proportions of empty and white cells.
+-- @arg data.reproduceTemperature A table with temperatures related to reproduction.
 -- @arg data.temperature A table with the temperatures: max for maximum temperature, min for minimum temperature, reproduceMin for the minimum
 -- temperature that makes the daisies reproductible, reproducePerfect for the temperature daisies will reproduce with a probability of 100%,
 -- and reproduceMax for the maximum temperature where daisies can reproduce.
@@ -107,103 +17,167 @@ end
 -- @arg data.lifeSpan How long does a daisy live?
 -- @arg data.dim The x and y dimensions of space.
 -- @arg data.albedo A table with white and black albedos.
+-- @image daisy.bmp
 DaisyWorld = Model{
-	proportions = {
-		empty = Choice{min = 0.1, max = 0.5, default = 0.5},
-		white = Choice{min = 0.1, max = 0.45, default = 0.2}
-	},
+	dim = 50,
+	finalTime = 200,
+	lifeSpan = 5,
 	temperature = {
-		min = Choice{min = 0, max = 100},
-		max = Choice{max = 100},
-		reproduceMin = Choice{min = 0, max = 100},
-		reproducePerfect = Choice{min = 0, max = 100, default = 50},
-		reproduceMax = Choice{max = 100}
+		min = 0,
+		max = 100
 	},
-	finalTime = Choice{min = 5, default = 200},
 	albedo = {
-		white = Choice{min = 0, max = 1, default = 0.2},
-		black = Choice{min = 0, max = 1, default = 0.7}  -- 0-1 How much energy hey absorb as heat from sunlight
+		white = 0.2,
+		black = 0.7
 	},
-	lifeSpan = Choice{min = 2, max = 20, step = 1, default = 10}, -- in time stamps
-	dim = 10,
-	init = function(model)
-		model.cell = Cell{
-			init = function(cell)
-				cell.SoilHeat = 50 --rand:number() * 100
-				cell.lifeSpan = Random():number(0, 4) -- we give random number to the age at the first moment
+	reproduceTemperature = {
+		max = 70,
+		min = 40,
+		perfect = 50
+	},
+	proportion = {
+		empty = 0.7,
+		white = 0.6 * 0.3
+	},
+	interface = function()
+		return {
+			{"number", "proportion", "albedo"},
+			{"temperature", "reproduceTemperature"},
+		}
+	end,
+	init = function(self)
+		local function calculateProbRepro(soilHeat)
+			local diff = math.abs(self.reproduceTemperature.perfect - soilHeat)
+			return 100 - diff
+		end
 
-				if Random():number() > model.proportions.empty then
-					if Random():number() > model.proportions.white then
-						cell.daisy = "black"
-					else
+		self.rand = Random{seed = 1}
+
+		self.proportion.black = 1 - self.proportion.empty - self.proportion.white
+
+		self.cell = Cell{
+			soilHeat = 50,
+			lifeSpan = Random{min = 0, max = 4, step = 1},
+			daisy = Random(self.proportion),
+			die = function(cell)
+				cell.lifeSpan = 0
+				cell.daisy = "empty"
+			end,
+			born = function(cell)
+				local blackDaisyCounter = 0
+				local whiteDaisyCounter = 0
+
+				forEachNeighbor(cell, function(_, neigh) 
+					if neigh.past.daisy == "black" then 
+						blackDaisyCounter = blackDaisyCounter + 1
+					elseif neigh.past.daisy == "white" then
+						whiteDaisyCounter = whiteDaisyCounter + 1
+					end 
+				end)
+
+				cell.lifeSpan = 0
+
+				if whiteDaisyCounter > blackDaisyCounter then
+					cell.daisy = "white"
+				elseif whiteDaisyCounter < blackDaisyCounter then
+					cell.daisy = "black"
+				elseif whiteDaisyCounter > 0 then  -- equal
+					if self.rand:number(0, 1) < 0.5 then
 						cell.daisy = "white"
-					end
-				else 
-					cell.daisy = "empty"
+					else
+						cell.daisy = "black"
+					end 
 				end
 			end,
-			execute = update,
-			temperature = model.temperature,
-			albedo = model.albedo,
-			maxLifeSpan = model.lifeSpan,
-			bornNewDaisy = bornNewDaisy,
-			calculateSoilHeat = calculateSoilHeat,
-			killDaisy = killDaisy,
-			calculateProbRepro = calculateProbRepro
-		}
+			calculateSoilHeat = function(cell)
+				local selfHeat
 
-		model.cs = CellularSpace{
-			xdim = model.dim,
-			instance = model.cell,
-			emptySpace = function(cs)
-				local traj = Trajectory{target = cs, select = function(cell) return cell.daisy == "empty" end}
-				return #traj
+				if cell.past.daisy == "white" then  --increment or decrement temperature depending on the daisy
+					selfHeat = cell.past.soilHeat - cell.past.soilHeat * self.albedo.white
+				elseif cell.past.daisy == "black"  then 
+					selfHeat = cell.past.soilHeat + cell.past.soilHeat * self.albedo.black
+				else
+					selfHeat = cell.past.soilHeat
+				end
+
+				local neigbourHeat = 0 --change temperature to make it similar to the neigbours
+				local neighbourCount = 0
+
+				forEachNeighbor(cell, function(_, neigh) 
+					neighbourCount = neighbourCount + 1
+					neigbourHeat = neigbourHeat + neigh.past.soilHeat
+				end)
+
+				neigbourHeat = neigbourHeat / neighbourCount -- calculate the mean of the neighbours
+				local heat = (selfHeat + neigbourHeat) / 2
+
+				heat = math.min(heat, self.temperature.max) --make heat value inside the valid range
+				heat = math.max(heat, self.temperature.min)
+	
+				return heat
 			end,
-			whiteDaisy = function(cs)
-				local traj = Trajectory{target = cs, select = function(cell) return cell.daisy == "white" end}
-				return #traj
-			end,
-			blackDaisy = function(cs)
-				local traj = Trajectory{target = cs, select = function(cell) return cell.daisy == "black" end}
-				return #traj
+			execute = function(cell)
+				if cell.past.daisy ~= "empty" then
+					cell.lifeSpan = cell.lifeSpan + 1
+				end
+		
+				if cell.past.lifeSpan >= self.lifeSpan then
+					 cell:die()
+				end
+		
+				cell.soilHeat = cell:calculateSoilHeat()
+		
+				if cell.past.daisy == "empty" and cell.past.soilHeat > self.reproduceTemperature.min and cell.past.soilHeat< self.reproduceTemperature.max then
+					local probabilityReproduce = calculateProbRepro(cell.past.soilHeat)
+					if self.rand:number() * 100 < probabilityReproduce then
+						cell:born()
+					end
+				end
 			end
 		}
 
-		model.cs:createNeighborhood{
-			strategy = "vonneumann"
+		self.cs = CellularSpace{
+			xdim = self.dim,
+			instance = self.cell,
+			blackDaisy = function(cs) return #cs:split("daisy").black end,
+			whiteDaisy = function(cs) return #cs:split("daisy").white end,
+			emptySpace = function(cs) return #cs:split("daisy").empty end
 		}
 
-		model.chart = Chart{
-			target = model.cs,
-			select = {"blackDaisy", "whiteDaisy", "emptySpace"}, 
-			title = "Population x Time",
-			yLabel = "#individual"
+		self.cs:createNeighborhood{
+			strategy = "vonneumann",
+			wrap = true
 		}
-
-		model.cs:notify(0)
-
-		model.map1 = Map{
-			target = model.cs,
-			select = "SoilHeat",
-			max = model.temperature.max,
-			min = model.temperature.min,
+	
+		self.map1 = Map{
+			target = self.cs,
+			select = "soilHeat",
 			slices = 6,
-			color = "OrRd"
+			max = self.temperature.max,
+			min = self.temperature.min,
+			color = {"yellow", "red"}
 		}
 
-		model.map2 = Map{
-			target = model.cs,
+		self.map2 = Map{
+			target = self.cs,
 			select = "daisy",
 			value = {"black", "white", "empty"},
 			color = {"black", "white", "green"}
 		}
 
-		model.timer = Timer{
-			Event{action = model.cs},
-			Event{action = model.chart},
-			Event{action = model.map1},
-			Event{action = model.map2}
+		self.chart = Chart{
+			target = self.cs,
+			select = {"blackDaisy", "whiteDaisy", "emptySpace"}, 
+			title ="Population x Time",
+			yLabel = "#individual"
+		}
+
+		self.timer = Timer{
+			Event{action = self.cs},
+			Event{action = self.chart},
+			Event{action = self.map1},
+			Event{action = self.map2}
 		}
 	end
-}
+} 
 
