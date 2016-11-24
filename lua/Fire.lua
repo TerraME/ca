@@ -32,17 +32,7 @@ Fire = Model{
 
 		model.cs = CellularSpace{
 			xdim = model.dim,
-			instance = model.cell,
-			burned = function(self)
-				return #Trajectory{target = self, select = function(cell)
-					return cell.state == "burned"
-				end}
-			end,
-			forest = function(self)
-				return #Trajectory{target = self, select = function(cell)
-					return cell.state == "forest"
-				end}
-			end
+			instance = model.cell
 		}
 
 		model.cs:sample().state = "burning"
@@ -50,7 +40,9 @@ Fire = Model{
 
 		model.chart = Chart{
 			target = model.cs,
-			select = {"burned", "forest"}
+			select = "state",
+			value = {"forest", "burning", "burned"},
+			color = {"green", "red", "brown"}
 		}
 
 		model.map = Map{
