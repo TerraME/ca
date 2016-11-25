@@ -7,6 +7,7 @@
 Parasit = Model{
 	finalTime = 500,
 	dim = 50,
+	random = true,
 	init = function(model)
 		model.cell = Cell{
 			init = function(cell)

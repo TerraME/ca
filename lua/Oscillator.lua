@@ -9,6 +9,7 @@ local amount = {0, -1, -2, -2, -3, -2, -2, -1, 0, 1, 2, 2, 3, 2, 2, 1}
 Oscillator = Model{
 	finalTime = 400,
 	dim = 50,
+	random = true,
 	init = function(model)
 		model.cell = Cell{
 			init = function(cell)

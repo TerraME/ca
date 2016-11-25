@@ -26,6 +26,7 @@ Life = Model{
 	finalTime = 100,
 	dim = 30,
 	pattern = Choice(patterns),
+	random = true,
 	init = function(model)
 		model.cell = Cell{
 			init = function(cell)

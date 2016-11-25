@@ -8,11 +8,12 @@ Snow = Model{
 	finalTime = 600,
 	dim = 50,
 	probability = 0.02,
+	random = true,
 	init = function(model)
 		model.cell = Cell{
 			init = function(cell)
 				cell.state = "empty"
-			end,
+			end,	
 			execute = function(cell, ev)
 				if cell.y == 0 then
 					if cell.past.state == "empty" and ev:getTime() < model.finalTime - model.dim and Random():number() < model.probability then

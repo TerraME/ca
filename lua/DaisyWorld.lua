@@ -39,6 +39,7 @@ DaisyWorld = Model{
 		empty = 0.7,
 		white = 0.6 * 0.3
 	},
+	random = true,
 	interface = function()
 		return {
 			{"number", "proportion", "albedo"},
