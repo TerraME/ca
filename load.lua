@@ -6,6 +6,7 @@ files = {
 	"Excitable.lua",
 	"Fire.lua",
 	"Growth.lua",
+	"InterspecificCompetition.lua",
 	"LifePatterns.lua",
 	"Life.lua",
 	"Oscillator.lua",
