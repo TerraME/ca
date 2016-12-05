@@ -161,6 +161,7 @@ end
 --- Banded vegetation model based on
 -- D. L. Dunkerley (1997) Banded vegetation: development under uniform
 -- rainfall from a simple cellular automaton model. Plant Ecology 129(2):103-111.
+-- This model was implemented by Ana Claudia Rorato, Karina Tosto and Ricardo Dal'Agnol da Silva.
 -- @arg data.plantCover Initial percentage of plant cover. A number from 0.01 to 1.
 -- @arg data.dryCoeff A coefficient beteeen 1.2 and 3.5 to change the state of a cell to dry .
 -- @arg data.wetCoeff A coefficient beteeen 0.6 and 1.2 to change the state of a cell to wet.

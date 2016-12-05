@@ -21,6 +21,7 @@ local initial_species = {"Agrostis", "Holcus", "Lolium", "Cynosurus", "Poa"}
 -- The Effect of Pattern on Process. 
 -- Author(s): Jonathan Silvertown, Senino Holtier, Jeff Johnson and Pam Dale
 -- Source: Journal of Ecology, Vol. 80, No. 3 (Sep., 1992), pp. 527-533.
+-- This model was implemented by Rolf Simoes, Diogo Amore, and Joao Arthur Pavanelli.
 -- @arg data.finalTime The number of simulation steps. The default value is 500.
 -- @arg data.displacements The displacement of the specied in grid (the paper's models).
 -- @image interspecific-competition.bmp
