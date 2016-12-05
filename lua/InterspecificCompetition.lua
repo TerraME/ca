@@ -23,6 +23,7 @@ local initial_species = {"Agrostis", "Holcus", "Lolium", "Cynosurus", "Poa"}
 -- Source: Journal of Ecology, Vol. 80, No. 3 (Sep., 1992), pp. 527-533.
 -- @arg data.finalTime The number of simulation steps. The default value is 500.
 -- @arg data.displacements The displacement of the specied in grid (the paper's models).
+-- @image interspecific-competition.bmp
 InterspecificCompetition = Model{
 	displacements = Choice{"Random", "ModelA", "ModelB", "ModelC", default = "ModelA"},
 	finalTime = 200,
