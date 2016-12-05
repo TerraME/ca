@@ -9,7 +9,7 @@ return{
 
 		model:run()
 
-		unitTest:assertSnapshot(model.chart, "InterspecificCompetition-chart-1.bmp")
+		unitTest:assertSnapshot(model.chart, "InterspecificCompetition-chart-1.bmp", 0.1)
 		unitTest:assertSnapshot(model.map, "InterspecificCompetition-map-1-end.bmp")
 
 		model = InterspecificCompetition{displacements = "Random", finalTime = 5}
