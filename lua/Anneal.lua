@@ -7,15 +7,10 @@
 Anneal = Model{
 	finalTime = 100,
 	dim = 80,
+	random = true,
 	init = function(model)
 		model.cell = Cell{
-			init = function(cell)
-				if Random():number() > 0.5 then
-					cell.state = "L"
-				else
-					cell.state = "R"
-				end
-			end,
+			state = Random{"L", "R"},
 			execute = function(cell)
 				local alive = countNeighbors(cell, "L")
 

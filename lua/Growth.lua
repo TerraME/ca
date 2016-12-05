@@ -10,6 +10,7 @@ Growth = Model{
 	finalTime = 250,
 	dim = 100,
 	probability = 0.05,
+	random = true,
 	init = function(model)
 		model.cell = Cell{
 			init = function(cell)

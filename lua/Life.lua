@@ -26,6 +26,7 @@ Life = Model{
 	finalTime = 100,
 	dim = 30,
 	pattern = Choice(patterns),
+	random = true,
 	init = function(model)
 		model.cell = Cell{
 			init = function(cell)
@@ -68,8 +69,8 @@ Life = Model{
 				customError("CellularSpace should have dim at least "..pattern.ydim..".")
 			end
 
-			local xloc = math.floor(model.cs.xdim/2 - pattern.xdim/2)
-			local yloc = math.floor(model.cs.ydim/2 - pattern.ydim/2)
+			local xloc = math.floor(model.cs.xdim / 2 - pattern.xdim / 2)
+			local yloc = math.floor(model.cs.ydim / 2 - pattern.ydim / 2)
 
 			insertPattern(model.cs, pattern, xloc, yloc)
 		end
