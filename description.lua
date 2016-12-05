@@ -1,4 +1,4 @@
-version = "0.3.4"
+version = "0.4"
 package = "ca"
 license = "GPL"
 title = "Cellular Automata"
