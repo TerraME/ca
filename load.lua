@@ -2,6 +2,7 @@
 files = {
 	"Utils.lua",
 	"Anneal.lua",
+	"BandedVegetation.lua",
 	"DaisyWorld.lua",
 	"Excitable.lua",
 	"Fire.lua",
