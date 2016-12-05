@@ -20,10 +20,9 @@ local initial_species = {"Agrostis", "Holcus", "Lolium", "Cynosurus", "Poa"}
 -- For more information see Cellular Automaton Models of Interspecific Competition for Space
 -- The Effect of Pattern on Process. 
 -- Author(s): Jonathan Silvertown, Senino Holtier, Jeff Johnson and Pam Dale
--- Source: Journal of Ecology, Vol. 80, No. 3 (Sep., 1992), pp. 527-533
--- @arg data.strategy The neighborhood model strategy. The default value is vonnewmann.
+-- Source: Journal of Ecology, Vol. 80, No. 3 (Sep., 1992), pp. 527-533.
 -- @arg data.finalTime The number of simulation steps. The default value is 500.
--- @arg data.species_displacements The displacement of the specied in grid (the paper's models).
+-- @arg data.displacements The displacement of the specied in grid (the paper's models).
 InterspecificCompetition = Model{
 	displacements = Choice{"Random", "ModelA", "ModelB", "ModelC", default = "ModelA"},
 	finalTime = 200,
@@ -52,7 +51,7 @@ InterspecificCompetition = Model{
 			execute = function(cell)
 				local count_species = {}
 
-				forEachNeighbor(cell, function(cell, neighbor)
+				forEachNeighbor(cell, function(_, neighbor)
 					local position = neighbor.past.species
 
 					if not count_species[position] then
