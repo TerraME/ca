@@ -158,8 +158,7 @@ local function init(model)
 	}
 end
 
---- Banded vegetation model based on
--- D. L. Dunkerley (1997) Banded vegetation: development under uniform
+--- Banded vegetation model based on Dunkerley (1997) Banded vegetation: development under uniform
 -- rainfall from a simple cellular automaton model. Plant Ecology 129(2):103-111.
 -- This model was implemented by Ana Claudia Rorato, Karina Tosto and Ricardo Dal'Agnol da Silva.
 -- @arg data.plantCover Initial percentage of plant cover. A number from 0.01 to 1.
@@ -185,24 +184,4 @@ BandedVegetation = Model{
 	finalTime = 20,
 	init = init
 }
--- pcf = plant cover final
 
---1 plot 0, 5, 20, 40 iterations, 40% prob plants, wet 0.70, dry 2.6
--- pcf 0.4, 0.3184, 0.3128, 0.3224
-
---2 plot 0, 20 iterations, 40% prob plants, wet 0.70, dry 2.6, x (cell 1 to 50 downslope) vs y (#plant / 50)
---get data from model
---plot:save("2_0it.png") -- pcf 0.4
---plot:save("2_20it.png") -- pcf 0.3052
-
---3 plot normal flow vs. no lateral flow vs. 1 lateral neighbor 30 iterations
--- pcf 0.3096, 0.2644, 0.2976
-
---4 plot rain decrease 11, 27, 34, 46 iterations, 40% prob plants, wet 0.70, dry 2.6
--- pcf 0.3168, 0.2516, 0.1884, 0.0764
-
---5 1%, 10%, 30%, 50%, 70%, 90% plant prob, 40 iterations, wet 0.70, dry 2.6
--- pcf 0.02, 0.1772, 0.2908, 0.332, 0.3024, 0.158
-
---6 1)dry1.2 wet0.6, 2)dry1.2 wet1.2, 3)dry3.5 wet0.6, 4)dry3.5 wet1.2, 40 it, 40% plant
--- pcf 0.3464, 0.2844, 0.1088, 0.076
