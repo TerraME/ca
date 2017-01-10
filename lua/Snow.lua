@@ -13,7 +13,7 @@ Snow = Model{
 		model.cell = Cell{
 			init = function(cell)
 				cell.state = "empty"
-			end,	
+			end,
 			execute = function(cell, ev)
 				if cell.y == 0 then
 					if cell.past.state == "empty" and ev:getTime() < model.finalTime - model.dim and Random():number() < model.probability then

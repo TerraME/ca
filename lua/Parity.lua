@@ -1,4 +1,4 @@
---- Parity model, by Nigel Gilbert. See 
+--- Parity model, by Nigel Gilbert. See
 -- modelingcommons.org/browse/one_model/3381.
 -- @arg data.dim The x and y dimensions of space.
 -- @arg data.finalTime A number with the final time of the simulation.
@@ -14,7 +14,7 @@ Parity = Model{
 				else
 					cell.state = "off"
 				end
-			end,	
+			end,
 			execute = function(cell)
 				local count = countNeighbors(cell, "on")
 

@@ -19,7 +19,7 @@ Growth = Model{
 				else
 					cell.state = "empty"
 				end
-			end,	
+			end,
 			execute = function(cell)
 				local count = countNeighbors(cell, "alive")
 

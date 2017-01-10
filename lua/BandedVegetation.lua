@@ -53,7 +53,7 @@ local function init(model)
 			elseif cell.water >= model.wetCoeff * model.rainfallPlantSurvival and cell.state == "empty" then
 				-- empty cells too wet become plant
 				cell.state = "plants"
-			end  
+			end
 		end,
 		rain = function(cell)
 			cell.water = cell.water + model.rainfall
