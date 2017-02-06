@@ -7,10 +7,9 @@ local function plotPerfil(model)
 		table.insert(perfil.state, cell.state)
 	end)
 
-	local perfilMean = {elevation = {}, plantCover = {}}
+	local perfilMean = DataFrame{elevation = {}, plantCover = {}}
 	local sum
 	for i = 0, 49 do
-		perfilMean.elevation[i + 1] = i
 		sum = 0
 		for j = 1, 2500 do
 			if perfil.x[j] == i and perfil.state[j] == "plants" then
@@ -18,11 +17,11 @@ local function plotPerfil(model)
 			end
 		end
 
-		perfilMean.plantCover[i + 1] = sum / 50
+		perfilMean:add{plantCover = sum / 50, elevation = i}
 	end
 
 	Chart{
-		data = perfilMean,
+		target = perfilMean,
 		select = "plantCover",
 		xAxis = "elevation",
 		yLabel = "Plant Cover",
