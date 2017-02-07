@@ -7,9 +7,9 @@
 -- it has an alive neighbor.
 -- @image growth.bmp
 Growth = Model{
-	finalTime = 250,
+	finalTime = 100,
 	dim = 100,
-	probability = 0.05,
+	probability = 0.15,
 	random = true,
 	init = function(model)
 		model.cell = Cell{
@@ -19,7 +19,7 @@ Growth = Model{
 				else
 					cell.state = "empty"
 				end
-			end,	
+			end,
 			execute = function(cell)
 				local count = countNeighbors(cell, "alive")
 

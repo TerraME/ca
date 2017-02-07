@@ -12,7 +12,7 @@ patterns.default = "random"
 
 --- A Model to simulate Game of Life.
 -- Look at the "oscillators" and the "spaceships"
--- in http://www.conwaylife.com/wiki/Main_Page for the 
+-- in http://www.conwaylife.com/wiki/Main_Page for the
 -- description some patterns.
 -- @arg data.finalTime A number with the final time of the simulation.
 -- @arg data.dim A number with the x and y size of space.

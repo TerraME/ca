@@ -12,7 +12,7 @@ Parasit = Model{
 		model.cell = Cell{
 			init = function(cell)
 				cell.state = Random():integer(0, 8)
-			end,	
+			end,
 			execute = function(cell)
 				local count1 = countNeighbors(cell, 1)
 				local count5 = countNeighbors(cell, 5)

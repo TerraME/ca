@@ -14,7 +14,7 @@ Oscillator = Model{
 		model.cell = Cell{
 			init = function(cell)
 				cell.state = Random():integer(0, 15)
-			end,	
+			end,
 			execute = function(cell)
 				local count = countNeighbors(cell, 0)
 

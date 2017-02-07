@@ -18,7 +18,7 @@ local initial_species = {"Agrostis", "Holcus", "Lolium", "Cynosurus", "Poa"}
 -- cristatus, Poa trivialis and Lolium perenne, based on experimentally determined
 -- rates of invasion.
 -- For more information see Cellular Automaton Models of Interspecific Competition for Space
--- The Effect of Pattern on Process. 
+-- The Effect of Pattern on Process.
 -- Author(s): Jonathan Silvertown, Senino Holtier, Jeff Johnson and Pam Dale
 -- Source: Journal of Ecology, Vol. 80, No. 3 (Sep., 1992), pp. 527-533.
 -- This model was implemented by Rolf Simoes, Diogo Amore, and Joao Arthur Pavanelli.
@@ -31,12 +31,12 @@ InterspecificCompetition = Model{
 	init = function(model)
 		if model.displacements == "ModelA" then
 			initial_species = {"Agrostis", "Holcus", "Lolium", "Cynosurus", "Poa"}
-		elseif model.displacements == "ModelB" then 
+		elseif model.displacements == "ModelB" then
 			initial_species = {"Agrostis", "Lolium", "Cynosurus", "Holcus", "Poa"}
 		elseif model.displacements == "ModelC" then
 			initial_species = {"Agrostis", "Holcus", "Poa", "Cynosurus", "Lolium"}
 		end
-		
+
 		model.cell = Cell{
 			init = function(cell)
 				if model.species_displacements == "Random" then
@@ -106,7 +106,7 @@ InterspecificCompetition = Model{
 		model.timer = Timer{
 			Event{action = model.map},
 			Event{action = model.chart},
-			Event{action = model.cells} 
+			Event{action = model.cells}
 		}
 	end
 }

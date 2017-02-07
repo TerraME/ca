@@ -68,12 +68,12 @@ DaisyWorld = Model{
 				local blackDaisyCounter = 0
 				local whiteDaisyCounter = 0
 
-				forEachNeighbor(cell, function(_, neigh) 
-					if neigh.past.daisy == "black" then 
+				forEachNeighbor(cell, function(_, neigh)
+					if neigh.past.daisy == "black" then
 						blackDaisyCounter = blackDaisyCounter + 1
 					elseif neigh.past.daisy == "white" then
 						whiteDaisyCounter = whiteDaisyCounter + 1
-					end 
+					end
 				end)
 
 				cell.lifeSpan = 0
@@ -87,7 +87,7 @@ DaisyWorld = Model{
 						cell.daisy = "white"
 					else
 						cell.daisy = "black"
-					end 
+					end
 				end
 			end,
 			calculateSoilHeat = function(cell)
@@ -95,7 +95,7 @@ DaisyWorld = Model{
 
 				if cell.past.daisy == "white" then  --increment or decrement temperature depending on the daisy
 					selfHeat = cell.past.soilHeat - cell.past.soilHeat * self.albedo.white
-				elseif cell.past.daisy == "black"  then 
+				elseif cell.past.daisy == "black"  then
 					selfHeat = cell.past.soilHeat + cell.past.soilHeat * self.albedo.black
 				else
 					selfHeat = cell.past.soilHeat
@@ -104,7 +104,7 @@ DaisyWorld = Model{
 				local neigbourHeat = 0 --change temperature to make it similar to the neigbours
 				local neighbourCount = 0
 
-				forEachNeighbor(cell, function(_, neigh) 
+				forEachNeighbor(cell, function(_, neigh)
 					neighbourCount = neighbourCount + 1
 					neigbourHeat = neigbourHeat + neigh.past.soilHeat
 				end)
@@ -114,20 +114,20 @@ DaisyWorld = Model{
 
 				heat = math.min(heat, self.temperature.max) --make heat value inside the valid range
 				heat = math.max(heat, self.temperature.min)
-	
+
 				return heat
 			end,
 			execute = function(cell)
 				if cell.past.daisy ~= "empty" then
 					cell.lifeSpan = cell.lifeSpan + 1
 				end
-		
+
 				if cell.past.lifeSpan >= self.lifeSpan then
 					 cell:die()
 				end
-		
+
 				cell.soilHeat = cell:calculateSoilHeat()
-		
+
 				if cell.past.daisy == "empty" and cell.past.soilHeat > self.reproduceTemperature.min and cell.past.soilHeat< self.reproduceTemperature.max then
 					local probabilityReproduce = calculateProbRepro(cell.past.soilHeat)
 					if self.rand:number() * 100 < probabilityReproduce then
@@ -149,7 +149,7 @@ DaisyWorld = Model{
 			strategy = "vonneumann",
 			wrap = true
 		}
-	
+
 		self.map1 = Map{
 			target = self.cs,
 			select = "soilHeat",
@@ -168,7 +168,7 @@ DaisyWorld = Model{
 
 		self.chart = Chart{
 			target = self.cs,
-			select = {"blackDaisy", "whiteDaisy", "emptySpace"}, 
+			select = {"blackDaisy", "whiteDaisy", "emptySpace"},
 			title ="Population x Time",
 			yLabel = "#individual"
 		}
@@ -180,5 +180,5 @@ DaisyWorld = Model{
 			Event{action = self.map2}
 		}
 	end
-} 
+}
 

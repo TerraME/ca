@@ -21,7 +21,7 @@ end
 -- (dead) or Xs (alive).
 -- @arg pattern A string with a file name without .file.
 -- @usage import("ca")
--- 
+--
 -- glider = getLife("glider")
 function getLife(pattern)
 	local mfile = filePath(pattern..".life", "ca")
