@@ -9,15 +9,15 @@ data{
 data{
 	file = "rPentomino.life",
 	image = "rPentomino.bmp",
-	summary = "The R-pentomino is a methuselah that was found by John Conway in 1970. It is by far the most active polyomino with fewer than six cells; all of the others stabilize in at most 10 generations, but the R-pentomino does not do so until generation 1103, by which time it has a population of 116. ",
+	summary = "The R-pentomino is a methuselah that was found by John Conway in 1970. It is by far the most active polyomino with fewer than six cells; all of the others stabilize in at most 10 generations, but the R-pentomino does not do so until generation 1103, by which time it has a population of 116.",
 	source = "http://www.conwaylife.com/wiki/R-pentomino"
 }
 
 data{
 	file = "dinnerTable.life",
 	image = "dinnerTable.bmp",
-	summary = "http://www.conwaylife.com/wiki/Dinner_table",
-	source = "Dinner table is a period 12 oscillator. It was the first period 12 oscillator to be found, and was discovered by Robert Wainwright in 1972. It consists of four eater 1s hassling a pre-beehive."
+	source = "http://www.conwaylife.com/wiki/Dinner_table",
+	summary = "Dinner table is a period 12 oscillator. It was the first period 12 oscillator to be found, and was discovered by Robert Wainwright in 1972. It consists of four eater 1s hassling a pre-beehive."
 }
 
 data{
