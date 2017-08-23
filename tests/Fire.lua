@@ -10,6 +10,8 @@ return{
 		f:run()
 
 		unitTest:assertSnapshot(f.map, "fire.bmp")
+
+		unitTest:assert(true)
 	end,
 }
 
