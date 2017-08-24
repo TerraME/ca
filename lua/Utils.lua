@@ -54,7 +54,7 @@ function countNeighbors(cell, val)
 	end
 
 	local count = 0
-	forEachNeighbor(cell, function(_, neigh)
+	forEachNeighbor(cell, function(neigh)
 		if neigh.past.state == val then
 			count = count + 1
 		end

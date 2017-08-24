@@ -53,7 +53,7 @@ InterspecificCompetition = Model{
 			execute = function(cell)
 				local count_species = {}
 
-				forEachNeighbor(cell, function(_, neighbor)
+				forEachNeighbor(cell, function(neighbor)
 					local position = neighbor.past.species
 
 					if not count_species[position] then
