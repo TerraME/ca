@@ -60,7 +60,7 @@ local function init(model)
 		waterPartition = function(cell)
 			if cell.state == "empty" then -- empty case
 				-- all water except 10 mm goes downslope
-				forEachNeighbor(cell, function(_, neigh)
+				forEachNeighbor(cell, function(neigh)
 					if neigh.elevation < cell.elevation then
 						neigh.water = neigh.water + (cell.water - 10)
 					end
@@ -78,7 +78,7 @@ local function init(model)
 			local donorCell = cell
 
 			-- distribute water downslope
-			forEachNeighbor(cell, function(_, neigh)
+			forEachNeighbor(cell, function(neigh)
 				if neigh.elevation < cell.elevation then
 					-- gives neighbor 10% of cell's water
 					neigh.water = neigh.water + tenPercent
@@ -90,7 +90,7 @@ local function init(model)
 			-- distribute water to neighbors
 			if not model.distributeLaterally then return end
 
-			forEachNeighbor(cell, function(_, neigh)
+			forEachNeighbor(cell, function(neigh)
 				if neigh.elevation ~= cell.elevation then return end
 
 				neigh.water = neigh.water + tenPercent -- gives neighbor 10% of cell's water
@@ -98,10 +98,10 @@ local function init(model)
 
 				if not model.distributeToSecondNeighbors then return end
 
-				forEachNeighbor(neigh, function(c, n)
+				forEachNeighbor(neigh, function(n)
 					-- neighbor elevation same as cell guarantees that neighbor is sharing laterally
 					-- neighbor different from donor cell guarantees that model doesnt try to share water from donorcell to itself
-					if n.elevation == c.elevation and n ~= donorCell then
+					if n.elevation == neigh.elevation and n ~= donorCell then
 						n.water = n.water + tenPercent / 2 -- gives neighbor 5% of donor cell's water
 						donorCell.water = donorCell.water - tenPercent / 2 -- remove 10% water from cell
 					end

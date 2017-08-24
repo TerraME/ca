@@ -68,7 +68,7 @@ DaisyWorld = Model{
 				local blackDaisyCounter = 0
 				local whiteDaisyCounter = 0
 
-				forEachNeighbor(cell, function(_, neigh)
+				forEachNeighbor(cell, function(neigh)
 					if neigh.past.daisy == "black" then
 						blackDaisyCounter = blackDaisyCounter + 1
 					elseif neigh.past.daisy == "white" then
@@ -104,7 +104,7 @@ DaisyWorld = Model{
 				local neigbourHeat = 0 --change temperature to make it similar to the neigbours
 				local neighbourCount = 0
 
-				forEachNeighbor(cell, function(_, neigh)
+				forEachNeighbor(cell, function(neigh)
 					neighbourCount = neighbourCount + 1
 					neigbourHeat = neigbourHeat + neigh.past.soilHeat
 				end)
