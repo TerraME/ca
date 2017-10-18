@@ -9,7 +9,7 @@ return{
 
 		f:run()
 
-		unitTest:assertSnapshot(f.map, "fire.bmp")
+		unitTest:assertSnapshot(f.map, "fire.bmp", 0.1)
 	end,
 }
 
