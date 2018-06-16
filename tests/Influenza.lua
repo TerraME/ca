@@ -4,7 +4,7 @@
 return{
 	Influenza = function(unitTest)
 		local model = Influenza{
-			finalTime = 10
+			finalTime = 50
 		}
 
 		unitTest:assertSnapshot(model.map, "Influenza-map-1-begin.bmp")
