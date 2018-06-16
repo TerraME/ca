@@ -1,34 +1,23 @@
-local cstate = {
-    dead = "dead",
-    healthy = "healthy",
-    infected = "infected",
-    expressing = "expressing",
-    infectious = "infectious"
-}
+local cstate = {dead = "dead", healthy = "healthy", infected = "infected", expressing = "expressing", infectious = "infectious"}
 
-local immstate = {
-    virgin = "virgin",
-    mature = "mature"
-}
+local immstate = {virgin = "virgin", mature = "mature"}
 
 --- Influenza A model by Beauchemin, Catherine, John Samuel, and Jack Tuszynski.
--- "A simple cellular automaton model for influenza A viral infections."
+-- "A simple cellular automaton model for influenza A viral infections.".
 -- Journal of theoretical biology 232.2 (2005): 223-234.
---
--- Authors: Matheus Cavassan Zaglia, Fabiana Zioti, Gabriel Sansigolo
---
+-- Authors: Matheus Cavassan Zaglia, Fabiana Zioti, Gabriel Sansigolo.
 -- @arg data.xdim The x dimension of the space.
 -- @arg data.ydim The y dimension of the space.
 -- @arg data.flow_rate The number of CA time steps corresponding to 1h in real time.
--- @arg data.finalTime The final time of the CA
+-- @arg data.finalTime The final time of the CA.
 -- @arg data.imm_lifespan The lifespan of the immune cell.
 -- @arg data.cell_lifespan The lifespan of the epithelial cell.
 -- @arg data.infect_lifespan The lifespan of an infected epithelial cell.
 -- @arg data.infect_init The probability of an epithelial cell starting as infectious.
--- @arg data.infect_rate The infection spread probability. infect_rate/8 (neighbours)
+-- @arg data.infect_rate The infection spread probability.
 -- @arg data.infect_delay The delay to an expressing epithelial cell becoming infectious.
 -- @arg data.express_delay The delay to an infected epithelial cell becoming expressing.
--- @arg data.division_time The probability per unit time that any dead epithelial cell is revived. (1/division_time) / (#healthy_cells/#dead_cells)
+-- @arg data.division_time The probability per unit time that any dead epithelial cell is revived.
 -- @arg data.recruit_delay The waiting delay of a newly recruited immune cell to become active.
 -- @arg data.recruitment The chance of recruiting a mature immune cell.
 -- @arg data.base_imm_cell The starting number of immune cells.
