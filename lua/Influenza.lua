@@ -28,8 +28,7 @@ local immstate = {
 -- @arg data.infect_rate The infection spread probability. infect_rate/8 (neighbours)
 -- @arg data.infect_delay The delay to an expressing epithelial cell becoming infectious.
 -- @arg data.express_delay The delay to an infected epithelial cell becoming expressing.
--- @arg data.division_time The probability per unit time that any dead epithelial cell
--- is revived. (1/division_time) / (#healthy_cells/#dead_cells)
+-- @arg data.division_time The probability per unit time that any dead epithelial cell is revived. (1/division_time) / (#healthy_cells/#dead_cells)
 -- @arg data.recruit_delay The waiting delay of a newly recruited immune cell to become active.
 -- @arg data.recruitment The chance of recruiting a mature immune cell.
 -- @arg data.base_imm_cell The starting number of immune cells.
@@ -49,20 +48,20 @@ Influenza = Model{
     base_imm_cell = 0,
     recruit_delay = 7,
     recruitment = Choice{min=0.00, max=1, step=0.01, default = 0.25},
-    recruit_count = 0,
-    dead_count = 0,
-    healthy_count = 0,
+
 
     init = function(model)
         model.finalTime = model.finalTime * model.flow_rate
         model.base_imm_cell = math.ceil(model.ydim * model.xdim * 0.00015)
+        dead_count = 0
+        healthy_count = 0
 
         model.cell  = Cell{
             infected_time = 0,
             state = Random{healthy = 1 - model.infect_init, infectious = model.infect_init},
             init = function(cell)
                 if cell.state == cstate.healthy then
-                    model.healthy_count = model.healthy_count + 1
+                    healthy_count = healthy_count + 1
                     cell.age = Random{min = 0, max = model.cell_lifespan}:sample()
                 else
                     cell.age = Random{min = 0, max = model.infect_lifespan}:sample()
@@ -107,20 +106,20 @@ Influenza = Model{
 
         function model.cell:die()
             if self.state == cstate.healthy then
-                model.healthy_count = model.healthy_count - 1
+                healthy_count = healthy_count - 1
             end
             self.state = cstate.dead
-            model.dead_count = model.dead_count + 1
+            dead_count = dead_count + 1
         end -- cell:die
 
         function model.cell:divide()
-            prob = ((1 / model.division_time) * (model.healthy_count / model.dead_count))
+            prob = ((1 / model.division_time) * (healthy_count / dead_count))
             d = Random{p = prob}
             if d:sample() then
                 self.state = cstate.healthy
                 self.age = 0
-                model.healthy_count = model.healthy_count + 1
-                model.dead_count = model.dead_count - 1
+                healthy_count = healthy_count + 1
+                dead_count = dead_count - 1
             end
             self:infect()
         end -- cell:divide
@@ -132,7 +131,7 @@ Influenza = Model{
                         infect = Random{p = model.infect_rate / 8 }
                         if infect:sample() then
                             self.state = cstate.infected
-                            model.healthy_count = model.healthy_count - 1
+                            healthy_count = healthy_count - 1
                             return true
                         end
                     end
