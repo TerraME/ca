@@ -1,5 +1,4 @@
-
-local cstate = { 
+local cstate = {
     dead = "dead",
     healthy = "healthy",
     infected = "infected",
@@ -9,12 +8,12 @@ local cstate = {
 
 local immstate = {
     virgin = "virgin",
-    mature = "mature" 
+    mature = "mature"
 }
 
--- Influenza A model by Beauchemin, Catherine, John Samuel, and Jack Tuszynski. 
--- "A simple cellular automaton model for influenza A viral infections.
--- " Journal of theoretical biology 232.2 (2005): 223-234.
+-- Influenza A model by Beauchemin, Catherine, John Samuel, and Jack Tuszynski.
+-- "A simple cellular automaton model for influenza A viral infections."
+-- Journal of theoretical biology 232.2 (2005): 223-234.
 --
 -- Authors: Matheus Cavassan Zaglia, Fabiana Zioti, Gabriel Sansigolo
 --
@@ -29,11 +28,11 @@ local immstate = {
 -- @arg data.infect_rate The infection spread probability. infect_rate/8 (neighbours)
 -- @arg data.infect_delay The delay to an expressing epithelial cell becoming infectious.
 -- @arg data.express_delay The delay to an infected epithelial cell becoming expressing.
--- @arg data.division_time The probability per unit time that any dead epithelial cell 
+-- @arg data.division_time The probability per unit time that any dead epithelial cell
 -- is revived. (1/division_time) / (#healthy_cells/#dead_cells)
 -- @arg data.recruit_delay The waiting delay of a newly recruited immune cell to become active.
 -- @arg data.recruitment The chance of recruiting a mature immune cell.
--- @arg data.base_imm_cell The starting number of immune cells. 
+-- @arg data.base_imm_cell The starting number of immune cells.
 Influenza = Model{
     xdim = Choice{min = 1, max = 440, step = 1, default = 40},
     ydim = Choice{min = 1, max = 280, step = 1, default = 40},
@@ -54,10 +53,10 @@ Influenza = Model{
     dead_count = 0,
     healthy_count = 0,
 
-    init = function(model) 
+    init = function(model)
         model.finalTime = model.finalTime * model.flow_rate
         model.base_imm_cell = math.ceil(model.ydim * model.xdim * 0.00015)
-        
+
         model.cell  = Cell{
             infected_time = 0,
             state = Random{healthy = 1 - model.infect_init, infectious = model.infect_init},
@@ -92,7 +91,7 @@ Influenza = Model{
                                 if cell.infected_time > model.express_delay then
                                     cell.state = cstate.expressing
                                 end
-                                -- if infected_time >  infect_delay, becomes infectious 
+                                -- if infected_time >  infect_delay, becomes infectious
                                 if cell.infected_time > model.infect_delay then
                                     cell.state = cstate.infectious
                                 end
@@ -115,14 +114,14 @@ Influenza = Model{
         end -- cell:die
 
         function model.cell:divide()
-            prob = ((1 / model.division_time) * (model.healthy_count / model.dead_count)) 
+            prob = ((1 / model.division_time) * (model.healthy_count / model.dead_count))
             d = Random{p = prob}
             if d:sample() then
                 self.state = cstate.healthy
                 self.age = 0
                 model.healthy_count = model.healthy_count + 1
                 model.dead_count = model.dead_count - 1
-            end                
+            end
             self:infect()
         end -- cell:divide
 
@@ -186,9 +185,9 @@ Influenza = Model{
             xdim = model.xdim,
             instance = model.cell
         } -- cellspace
-        
+
         model.cs:createNeighborhood{wrap = true}
-        
+
         model.environment = Environment{
             model.society,
             model.cs
