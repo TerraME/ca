@@ -11,7 +11,7 @@ local immstate = {
     mature = "mature"
 }
 
--- Influenza A model by Beauchemin, Catherine, John Samuel, and Jack Tuszynski.
+--- Influenza A model by Beauchemin, Catherine, John Samuel, and Jack Tuszynski.
 -- "A simple cellular automaton model for influenza A viral infections."
 -- Journal of theoretical biology 232.2 (2005): 223-234.
 --
