@@ -20,7 +20,6 @@ local immstate = {virgin = "virgin", mature = "mature"}
 -- @arg data.division_time The probability per unit time that any dead epithelial cell is revived.
 -- @arg data.recruit_delay The waiting delay of a newly recruited immune cell to become active.
 -- @arg data.recruitment The chance of recruiting a mature immune cell.
--- @arg data.base_imm_cell The starting number of immune cells.
 Influenza = Model{
     xdim = Choice{min = 1, max = 440, step = 1, default = 40},
     ydim = Choice{min = 1, max = 280, step = 1, default = 40},
@@ -34,16 +33,15 @@ Influenza = Model{
     infect_delay = 6,
     express_delay = 4,
     division_time = 12,
-    base_imm_cell = 0,
     recruit_delay = 7,
     recruitment = Choice{min=0.00, max=1, step=0.01, default = 0.25},
 
 
     init = function(model)
         model.finalTime = model.finalTime * model.flow_rate
-        model.base_imm_cell = math.ceil(model.ydim * model.xdim * 0.00015)
-        dead_count = 0
-        healthy_count = 0
+        local base_imm_cell = math.ceil(model.ydim * model.xdim * 0.00015)
+        local dead_count = 0
+        local healthy_count = 0
 
         model.cell  = Cell{
             infected_time = 0,
@@ -102,8 +100,8 @@ Influenza = Model{
         end -- cell:die
 
         function model.cell:divide()
-            prob = ((1 / model.division_time) * (healthy_count / dead_count))
-            d = Random{p = prob}
+            local prob = ((1 / model.division_time) * (healthy_count / dead_count))
+            local d = Random{p = prob}
             if d:sample() then
                 self.state = cstate.healthy
                 self.age = 0
@@ -117,7 +115,7 @@ Influenza = Model{
             if self.state == cstate.healthy then
                 forEachNeighbor(self, function(neighbor)
                     if neighbor.state == cstate.infectious and self.state == cstate.healthy then
-                        infect = Random{p = model.infect_rate / 8 }
+                        local infect = Random{p = model.infect_rate / 8 }
                         if infect:sample() then
                             self.state = cstate.infected
                             healthy_count = healthy_count - 1
@@ -139,18 +137,18 @@ Influenza = Model{
                         agent.delay = agent.delay - 1
                     end
                 else
-                    if agent.age > model.imm_lifespan * model.flow_rate then
+                    if agent.age > model.imm_lifespan then
                         agent:die()
                     else
-                        cell = agent:getCell()
+                        local cell = agent:getCell()
                         if cell.state == cstate.expressing or cell.state == cstate.infectious then
                             if agent.state == immstate.virgin then
                                 agent.state = immstate.mature
                             else
                                 cell:die()
-                                s = Random{p = model.recruitment}
+                                local s = Random{p = model.recruitment}
                                 if s:sample() then
-                                    a = model.society:add()
+                                    local a = model.society:add()
                                     a.state = immstate.mature
                                     a.delay = model.recruit_delay
                                     a:enter(model.cs:sample())
@@ -158,7 +156,9 @@ Influenza = Model{
                             end
                         end
                         agent:walk()
-                        agent.age = agent.age + 1
+                        if (model.timer:getTime() % model.flow_rate) == 0 then
+                            agent.age = agent.age + 1
+                        end
                     end
                 end
             end -- execute
@@ -166,7 +166,7 @@ Influenza = Model{
 
         model.society = Society{
             instance = model.agent,
-            quantity = model.base_imm_cell
+            quantity = base_imm_cell
         } -- society
 
         model.cs = CellularSpace{
@@ -202,9 +202,9 @@ Influenza = Model{
             Event{period = model.flow_rate, action = model.map},
             Event{action = model.society},
             Event{period = model.flow_rate, action = function()
-                      if #model.society < model.base_imm_cell then
-                          agent = model.society:add()
-                          agent:enter(model.cs:sample())
+                      if #model.society < base_imm_cell then
+                          agent = model.society:add()    -- SKIP
+                          agent:enter(model.cs:sample()) -- SKIP
                       end
                   end} -- base_imm_cell maintenance
         } -- timer
