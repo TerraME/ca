@@ -7,11 +7,11 @@ return{
 			finalTime = 5
 		}
 
-		unitTest:assertSnapshot(model.map, "Parasit-map-1-begin.bmp")
+		unitTest:assertSnapshot(model.map, "Parasit-map-1-begin.bmp", 0.1)
 
 		model:run()
 
-		unitTest:assertSnapshot(model.map, "Parasit-map-1-end.bmp")
+		unitTest:assertSnapshot(model.map, "Parasit-map-1-end.bmp", 0.1)
 	end,
 }
 
