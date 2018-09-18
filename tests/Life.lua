@@ -29,7 +29,7 @@ return{
 
 		l:run()
 
-		unitTest:assertSnapshot(l.map, "life.bmp")
+		unitTest:assertSnapshot(l.map, "life.bmp", 0.1)
 
 		l = Life{
 			finalTime = 5

@@ -10,7 +10,7 @@ return{
 		}
 
 		model:run()
-		unitTest:assertSnapshot(model.map, "snow.png")
+		unitTest:assertSnapshot(model.map, "snow.png", 0.1)
 	end,
 }
 
