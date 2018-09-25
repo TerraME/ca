@@ -176,10 +176,7 @@ Influenza = Model{
 
         model.cs:createNeighborhood{wrap = true}
 
-        model.environment = Environment{
-            model.society,
-            model.cs
-        } -- enviroment
+        model.environment = Environment{model.society, model.cs}
 
         model.environment:createPlacement{}
 
